@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+const { title } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />        <title>{title} | Portfolio</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    </head>
+    <body class="bg-[#0a0a0c] text-slate-300 selection:bg-emerald-500/30">
+        <div class="fixed inser-0 -z-10 bg-[linear-gradient(to_right,#80808012_1px, transparent_1px), linear-gradient(to_bottom, #808012_1px, transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%, #000,70%, transparent_100%)]"></div>
+        <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
+            <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+                <a href="/" class="font-mono text-emerald-400 font-bold hover:tracking-widest transition-all">
+                    RAFAEL_GARCIA_RESUME_v2.0.1
+                </a>
+                <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-tighter">
+                    <a href="/skills" class="hover:text-emerald-400 transition">Skills</a>
+                    <a href="/work" class="hover:text-emerald-400 transition">Work Experience</a>
+                    <a href="/education" class="hover:text-emerald-400 transition">Education</a>
+                    <a href="/projects" class="hover:text-emerald-400 transition">Projects</a>
+                    <a href="/contact" class="hover:text-emerald-400 transition text-emerald-500">Contact</a>
+                </div>
+            </div>
+        </nav>       
+
+        <main class="pt-32 pb-20 px-6 max-w-5xl mx-auto min-h-screen">
+            <slot />
+        </main>
+
+        <footer class="border-t border-white/5 py-10 text-center text-xs text-slate-500 font-mono">
+            <p>&copy; {currentYear} - Built with Astro</p>
+            <p class="mt-2 text-[10px] opacity-50">STATUS: STABLE</p>
+        </footer>
+    </body>
+</html>

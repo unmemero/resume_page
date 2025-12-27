@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@layer base {
+    body {
+        @apply antialiased overflow-x-hidden bg-[#0a0a0c] text-slate-300;
+    }
+}
+
+/*Scrollbar styling*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track{
+   background: transparent;
+}
+::-webkit-scrollbar-thumb{
+    @apply bg-emerald-500/20 rounded-full hover:bg-emerald-500/50 transition;
+}
+::-webkit-scrollbar-thumb:hover{
+    @apply bg-emerald-500/20
+}

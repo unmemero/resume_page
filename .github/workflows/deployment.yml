@@ -1,0 +1,15 @@
+name: Build and Deploy
+on:
+    push:
+        branches: [ main ]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Install Dependencies
+              run: npm ci
+            - name: Build Site'
+              run: npm run build
+            
