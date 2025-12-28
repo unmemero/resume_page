@@ -7,13 +7,13 @@ import HeroText from "../components/interactive/HeroText";
 <Layout title="Home">
 	<section class="flex flex-col items-center text-center space-y-16 py-12">
 		<div class="space-y-4">
-			<h2 class="text-emerald-400 font-mono text-sm">>>SYSTEM_INIT</h2>
+			<h2 class="text-emerald-600 dark:text-emerald-400 font-mono text-sm">>>SYSTEM_INIT</h2>
 			<h1 class="text-5xl font-bold tracking-tighter">
-				<span class="text-emerald-500">
+				<span class="text-emerald-600 dark:text-emerald-500">
 					<HeroText client:load text="Fullstack" />
 				</span>
 				<br />
-				<span class="text-emerald-500">
+				<span class="text-emerald-600 dark:text-emerald-500">
 					<HeroText client:load text="& DevOps & AI/ML" />
 				</span>
 
@@ -23,10 +23,10 @@ import HeroText from "../components/interactive/HeroText";
 		<CoverLetter client:load />
 
 		<div class="flex flex-wrap justify-center gap-6 mt-8">
-			<a href="/assets/resume.pdf" class="px-6 py-3 bg-white text-black font-bold rounded-sm hover:bg-emerald-500 hover:text-white transition-all">
+			<a href="/assets/resume.pdf" class="px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-black font-bold rounded-sm hover:bg-emerald-600 dark:hover:bg-emerald-500 hover:text-white transition-all">
 				DOWNLOAD RESUME
 			</a>
-			<a href="/contact" class="px-6 py-3 border border-white/10 rounded-sm hover:bg-white/5 transition">
+			<a href="/contact" class="px-6 py-3 border border-slate-300 dark:border-white/10 rounded-sm hover:bg-slate-100 dark:hover:bg-white/5 transition">
 				CONTACT
 			</a> 
 		</div>

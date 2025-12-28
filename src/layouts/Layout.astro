@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+import ThemeToggle from '../components/ui/ThemeToggle';
+import MobileMenu from '../components/ui/MobileMenu';
+import AnimatedBackground from '../components/interactive/AnimatedBackground';
+
 const { title } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
@@ -10,20 +14,83 @@ const currentYear = new Date().getFullYear();
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />        <title>{title} | Portfolio</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <script is:inline>
+            const theme = (()=>{
+                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                    return localStorage.getItem('theme');
+                }
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light'
+            })();
+
+            if (theme === 'light'){
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+            window.localStorage.setItem('theme', theme)
+        </script>
     </head>
-    <body class="bg-[#0a0a0c] text-slate-300 selection:bg-emerald-500/30">
-        <div class="fixed inser-0 -z-10 bg-[linear-gradient(to_right,#80808012_1px, transparent_1px), linear-gradient(to_bottom, #808012_1px, transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%, #000,70%, transparent_100%)]"></div>
-        <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
+
+    <body class="bg-slate-50 dark:bg-[#0a0a0c] text-slate-800 dark:text-slate-300 selection:bg-emerald-500/30 transition-colors duration-300">
+        <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div class="absolute inset-0
+            bg-[linear-gradient(to_right,rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(16,185,129,0.05)_1px,transparent_1px)]
+            bg-[size:45px_45px]
+            [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+
+            <div class="absolute inset-0 bg-scanline animate-scan opacity-30 dark:opacity-20"></div>
+            <div id="mouse-glow" 
+                class="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 md:opacity-100" 
+                style="background: radial-gradient(600px circle at var(--x) var(--y), rgba(16, 185, 129, 0.08), transparent 40%);">
+            </div>
+            <AnimatedBackground client:load />
+        </div>
+
+        <style>
+            @keyframes scan{
+                0% {transfor: translateY(-100%);}
+                100% {transform: translateY(100%);}
+            }
+
+            .animate-scan{
+                animation: scan 12s linear infinite;
+            }
+
+            .bg-scanline {
+                background: linear-gradient(
+                    to-botton,
+                    transparent,
+                    rgba(16, 185, 129, 0.05) 45%, 
+                    rgba(16, 185, 129, 0.15) 50%, 
+                    rgba(16, 185, 129, 0.05) 55%, 
+                    transparent
+                );
+                height:1000%;
+                width: 100%;
+            }
+        </style>
+
+        <nav class="fixed top-0 w-full z-50 border-b border-slate-200/50 dark:border-white/5 bg-white/80 dark:bg-black/50 backdrop-blur-md transition-colors duration-300">
             <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-                <a href="/" class="font-mono text-emerald-400 font-bold hover:tracking-widest transition-all">
+                <a href="/" class="font-mono text-emerald-600 dark:text-emerald-400 font-bold hover:tracking-widest transition-all">
                     RAFAEL_GARCIA_RESUME_v2.0.1
                 </a>
-                <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-tighter">
-                    <a href="/skills" class="hover:text-emerald-400 transition">Skills</a>
-                    <a href="/work" class="hover:text-emerald-400 transition">Work Experience</a>
-                    <a href="/education" class="hover:text-emerald-400 transition">Education</a>
-                    <a href="/projects" class="hover:text-emerald-400 transition">Projects</a>
-                    <a href="/contact" class="hover:text-emerald-400 transition text-emerald-500">Contact</a>
+                <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-tighter text-slate-700 dark:text-slate-300">
+                    <a href="/skills" class="hover:text-emerald-500 dark:hover:text-emerald-400 transition">Skills</a>
+                    <a href="/work" class="hover:text-emerald-500 dark:hover:text-emerald-400 transition">Work Experience</a>
+                    <a href="/education" class="hover:text-emerald-500 dark:hover:text-emerald-400 transition">Education</a>
+                    <a href="/projects" class="hover:text-emerald-500 dark:hover:text-emerald-400 transition">Projects</a>
+                    <a href="/contact" class="hover:text-emerald-500 dark:hover:text-emerald-400 transition text-emerald-600 dark:text-emerald-500">Contact</a>
+                    <ThemeToggle client:load />
+                </div>
+
+                {/* Mobile NAV */}
+                <div class="flex md:hidden items-center gap-4">
+                    <ThemeToggle client:load />
+                    <MobileMenu client:load />
                 </div>
             </div>
         </nav>       
@@ -32,9 +99,19 @@ const currentYear = new Date().getFullYear();
             <slot />
         </main>
 
-        <footer class="border-t border-white/5 py-10 text-center text-xs text-slate-500 font-mono">
+        <footer class="border-t border-slate-200/50 dark:border-white/5 py-10 text-center text-xs text-slate-500 dark:text-slate-500 font-mono">
             <p>&copy; {currentYear} - Built with Astro</p>
             <p class="mt-2 text-[10px] opacity-50">STATUS: STABLE</p>
         </footer>
+
+        <script is:inline>
+            document.addEventListener('mousemove',(e)=>{
+              const glow = document.getElementById('mouse-glow');
+              if(glow) {
+                glow.style.setProperty('--x', `${e.clientX}px`)
+                glow.style.setProperty('--y', `${e.clientY}px`)
+              }
+            })
+        </script>
     </body>
 </html>

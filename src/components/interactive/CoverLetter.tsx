@@ -6,7 +6,7 @@ export default function CoverLetter() {
     const [verbose, setVerbose] = useState(false);
 
     return (
-        <div className='relative max-w-3xl mx-auto p-8 border border-slate-800 rounded-lg bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col'>
+        <div className='relative max-w-3xl mx-auto p-8 border border-slate-200 dark:border-slate-800 rounded-lg bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col shadow-sm dark:shadow-none'>
             
             {/* 1. THE SCANNING LINE (The moving green light) */}
             {verbose && (
@@ -19,18 +19,18 @@ export default function CoverLetter() {
             )}
 
             {/* 2. TERMINAL HEADER (The terminal looking thing with green pointer) */}
-            <div className='relative z-10 flex justify-between items-center mb-8 border-b border-slate-800 pb-4'>
-                <h1 className='text-sm font-mono text-emerald-400 flex items-center gap-2'>
+            <div className='relative z-10 flex justify-between items-center mb-8 border-b border-slate-200 dark:border-slate-800 pb-4'>
+                <h1 className='text-sm font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-2'>
                     {/* Glowing Green Pointer/Status Light */}
                     <span className='w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]' />
-                    rafael@dev - ~/resume - $ <span className='font-mono text-white'>cat cover_letter.md --{verbose ? "verbose" : "concise"}</span>
+                    rafael@dev - ~/resume - $ <span className='font-mono text-slate-700 dark:text-white'>cat cover_letter.md --{verbose ? "verbose" : "concise"}</span>
                 </h1>
                 <button
                     onClick={() => setVerbose(!verbose)}
                     className={`text-[10px] font-mono px-3 py-1 rounded border transition-all ml-4 ${
                         verbose
-                            ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400'
-                            : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500'
+                            ? 'bg-emerald-500/10 dark:bg-emerald-500/20 border-emerald-500 text-emerald-600 dark:text-emerald-400'
+                            : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-500'
                     }`}
                 >
                     MODE: {verbose ? 'VERBOSE' : `CONCISE`}
@@ -45,7 +45,7 @@ export default function CoverLetter() {
                 <div className="absolute -inset-1 bg-emerald-500/20 rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-500"></div>
                 
                 {/* Adjusted to w-32 on mobile (smaller) and w-44 on desktop */}
-                <div className='relative w-40 h-40 md:w-44 md:h-56 overflow-hidden rounded-sm border border-emerald-500/30 bg-slate-950 shadow-2xl'>
+                <div className='relative w-40 h-40 md:w-44 md:h-56 overflow-hidden rounded-sm border border-emerald-500/30 bg-slate-100 dark:bg-slate-950 shadow-2xl'>
                     <img 
                         src="/assets/my_pic.jpg" 
                         alt="Rafael Garcia" 
@@ -59,7 +59,7 @@ export default function CoverLetter() {
                         <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-emerald-400"></div>
                         <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-emerald-400"></div>
 
-                        <div className="absolute bottom-1 right-1 px-1 bg-emerald-500 text-slate-950 font-mono text-[10px] font-bold uppercase tracking-tighter">
+                        <div className="absolute bottom-1 right-1 px-1 bg-emerald-500 text-white dark:text-slate-950 font-mono text-[10px] font-bold uppercase tracking-tighter">
                             Bio_IMG
                         </div>
                     </div>
@@ -67,8 +67,8 @@ export default function CoverLetter() {
 
                 {/* Text Content */}
                 <motion.div layout className='flex-1 font-sans text-center md:text-left'>
-                    <p className="text-lg text-white font-medium mb-6 leading-relaxed">
-                        Hello Everyone. I'm <span className="text-emerald-400 font-bold">Rafael Garcia</span>. 
+                    <p className="text-lg text-slate-700 dark:text-white font-medium mb-6 leading-relaxed">
+                        Hello Everyone. I'm <span className="text-emerald-600 dark:text-emerald-400 font-bold">Rafael Garcia</span>. 
                         I'm a Computer Science new grad from El Paso, Texas, with a deep interest 
                         in the intersection of low-level systems, automation, and AI infrastructure.
                     </p>

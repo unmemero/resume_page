@@ -1,0 +1,84 @@
+---
+import { span } from "framer-motion/client";
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from 'astro:content';
+
+//Fetch material
+const entry = await getEntry('skills', 'skills');
+console.log(entry)
+const rawContent = entry?.body || '';
+
+//Category parser
+const parseSkills = (text: string) =>{
+    const sections = text.split(/^#\s+/m).filter(Boolean);
+
+    return sections.map(section => {
+        const lines = section.split('\n').filter(l => l.trim());
+        const header = lines.shift() || 'UKNOWN_MODULE'
+        const skills = lines.map(line => {
+            const match = line.match(/^-\s*(\*?)(.*?):\s*(.*)$/);
+            if (!match) return null;
+
+            return {
+                isStarred: match[1] === '*',
+                name: match[2].trim(),
+                duration: match[3].trim()
+            };
+        }).filter((skill): skill is { isStarred: boolean; name: string; duration: string } => skill !== null);
+        return {header, skills};
+    });
+};
+
+const modules = parseSkills(rawContent);
+---
+
+<Layout title="System Skills">
+    <div class="space-y-8">
+        <div class="mb-12 border-b border-emerald-500/20 pb-6">
+            <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
+                <span class="text-emerald-500 font-mono text-sm mr-2">[0x00]</span> Manifest
+            </h1>
+            <p class="font-mono text-[10px] text-slate-500 mt-2 uppercase tracking-widest">
+                Status Online | MOdules Detected: {modules.length}
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {modules.map(module => (
+                <section class="relative group border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-6 rounded-sm">
+                    <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-slate-300 dark:border-slate-700"></div>
+                    <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-slate-300 dark:border-slate-700"></div>
+                
+                    <header class="flex justify-between items-center mb-6">
+                        <h2 class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-500 tracking-widest uppercase">
+                            // {module.header}
+                        </h2>
+                        <div class="flex gap-1">
+                            <div class="w-1.5 h1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <div class="w-1.5 h1.5 rounded-full bg-slate-700"></div>
+                        </div>
+                    </header>
+
+                    <div class="space-y-4">
+                        {module.skills.map(skill => (
+                            <div class={`group relative p-3 border-l-2 transition-all ${skill.isStarred ? 'border-emerald-500 bg-emerald-500/5' : 'border-slate-800 hover:border-slate-600'}`}>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class={`font-mono text-xs tracking-tight ${skill.isStarred ? 'text-slate-100 font-bold' : 'text-slate-400'}`}>
+                                        {skill.isStarred && <span  class="text-emerald-500 mr-1">»</span>}
+                                        {skill.name}
+                                    </span>
+                                    <span class="font-mono text-[9px] text-slate-500 uppercase">{skill.duration}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-0.5 h-1.5 mt-2">
+                                {/* DURATION RENDERING LOGIC */}
+
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            ))}
+        </div>
+    </div>
+</Layout>

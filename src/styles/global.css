@@ -1,7 +1,17 @@
 @import "tailwindcss";
+
+@variant dark (.dark &);
+
 @layer base {
+    :root {
+        --menu-bg: white;
+    }
+    .dark {
+        --menu-bg: #0f172a;
+    }
+    
     body {
-        @apply antialiased overflow-x-hidden bg-[#0a0a0c] text-slate-300;
+        @apply antialiased overflow-x-hidden transition-colors duration-300;
     }
 }
 
@@ -10,11 +20,15 @@
     width: 5px;
 }
 ::-webkit-scrollbar-track{
+   background: #e2e8f0;
+}
+.dark ::-webkit-scrollbar-track{
    background: transparent;
 }
 ::-webkit-scrollbar-thumb{
-    @apply bg-emerald-500/20 rounded-full hover:bg-emerald-500/50 transition;
+    background-color: rgb(16 185 129 / 0.2);
+    @apply rounded-full transition;
 }
 ::-webkit-scrollbar-thumb:hover{
-    @apply bg-emerald-500/20
+    background-color: rgb(16 185 129 / 0.5);
 }
