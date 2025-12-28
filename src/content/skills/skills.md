@@ -5,6 +5,7 @@
 - Python: 2 years
 - Bash: 1 year
 - Go: 3 months
+- React: 1 year
 
 # [TECHNICAL] DevOps
 - *Linux: 2 years
