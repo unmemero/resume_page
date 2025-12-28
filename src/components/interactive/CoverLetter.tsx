@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TypewriterText } from './TypewriterText';
 
-export default function CoverLetter() {
+interface CoverLetterProps {
+    baseUrl?: string;
+}
+
+export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
     const [verbose, setVerbose] = useState(false);
 
     return (
@@ -47,7 +51,7 @@ export default function CoverLetter() {
                 {/* Adjusted to w-32 on mobile (smaller) and w-44 on desktop */}
                 <div className='relative w-40 h-40 md:w-44 md:h-56 overflow-hidden rounded-sm border border-emerald-500/30 bg-slate-100 dark:bg-slate-950 shadow-2xl'>
                     <img 
-                        src="/assets/my_pic.jpg" 
+                        src={`${baseUrl}assets/my_pic.jpg`} 
                         alt="Rafael Garcia" 
                         className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'    
                     />

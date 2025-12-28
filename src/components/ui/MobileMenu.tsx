@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X} from 'lucide-react';
 
-export default function MobileMenu() {
+interface MobileMenuProps {
+    baseUrl?: string;
+}
+
+export default function MobileMenu({ baseUrl = '/' }: MobileMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isDark, setIsDark] = useState(true);
 
@@ -22,11 +26,11 @@ export default function MobileMenu() {
     }, []);
 
     const menuItems = [
-        {name: 'Skills', href:'skills'},
-        {name: 'Work', href: '/work'},
-        {name: 'Education', href: '/education'},
-        {name: 'Projects', href: 'projects'},
-        {name: 'Contact', href: 'contact'}
+        {name: 'Skills', href:`${baseUrl}skills`},
+        {name: 'Work', href: `${baseUrl}work`},
+        {name: 'Education', href: `${baseUrl}education`},
+        {name: 'Projects', href: `${baseUrl}projects`},
+        {name: 'Contact', href: `${baseUrl}contact`}
     ];
 
     return(
