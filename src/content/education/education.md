@@ -1,25 +1,37 @@
 ---
 schools:
-  - id: "university-of-tech"
-    school: "University of Technology"
+  - id: "utep"
+    school: "University of Texas at El Paso"
     degree: "B.S. in Computer Science"
-    period: "09-2016 to 05-2020"
-    gpa: "3.8"
+    period: "August 2023 to December 2025"
+    gpa: "3.94"
     majorGpa: "4.0"
-  - id: "community-college"
-    school: "State Community College"
-    degree: "Associate of Science"
-    period: "09-2014 to 06-2016"
-    gpa: ""
+  - id: "epcc"
+    school: "El Paso Community College"
+    degree: "Associate of Arts in Computer Science"
+    period: "January 2021 to June 2023"
+    gpa: "3.83"
+  - id: "ud"
+    school: "University of Dallas"
+    degree: "B. A. in Philosophy"
+    period: "August 2018 to September 2019"
+    gpa: "3.3"
 ---
 
-# university-of-tech
+# utep
 ## AWARDS
-- Dean's List (4 Semesters)
-- Excellence in Systems Programming Award
+- NSF S STEM Scholar
+- Vice President Of Artecs Student Organization
 ## COURSEWORK
-- Operating Systems, Distributed Systems, Compilers, Data Structures
+- Modern AI (Graduate Level), Information Retrieval (Graduate Level), Data Mining (Graduate Level), Agile Software Development (Graduate Level), Machine Learning (Graduate Level), Software Engineering Design and Implementation, Software Engineering Requirements, Operating Systems, Programming Language Concepts, Digital Systems Design, Database Systems, Advanced Object Oriented Programming, Computer Organization, Automata Theory
 
-# community-college
+# epcc
+## AWARDS
+
 ## COURSEWORK
-- Calculus I-III, Physics (Mechanics), Intro to C++
+- Data Structures and Algorrithms
+
+# ud
+## AWARDS
+
+## COURSEWORK

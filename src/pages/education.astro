@@ -7,17 +7,107 @@ const { schools } = entry?.data;
 
 const parseDetails = (text: string) => {
     const sections = text.split(/^#\s+/m).filter(Boolean);
-    return sections.reduce((acc, section) => {
+    return sections.reduce((acc: Record<string, { awards: string[], coursework: string[] }>, section) => {
         const lines = section.split('\n').filter(l => l.trim());
         const id = lines.shift()?.trim();
         const content = lines.join('\n');
-        //TODO: FINISH FUNCTION
-        
+        const awards = content.match(/## AWARDS\n([\s\S]*?)(?=##|$)/)?.[1].split('-').map(s => s.trim()).filter(Boolean) || [];       
+        const coursework = content.match(/## COURSEWORK\n([\s\S]*?)(?=##|$)/)?.[1].split('-').map(s=>s.trim()).filter(Boolean) || [];
+        if(id){
+            acc[id] = {awards, coursework};
+        }
         return acc;
-    })
-}
+    }, {});
+};
+
+const details = parseDetails(entry?.body || '');
 ---
 
 <Layout title="Education">
+    <div class="max-w-4xl mx-auto py-10 px-4">
+        <div class="relative mb-6 border-b border-emerald-500/20 pb-6">
+            <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
+                <span class="text-emerald-500 font-mono font-medium mr-2">[0x02]</span>
+                <span class="font-mono font-medium">EDUCATION_MODULES</span>
+            </h1>
+            <p id="status-text" class="font-mono text-[10px] text-slate-500 mt-2 uppercase tracking-widest">
+                SYSTEM_READY // RUNNING
+            </p>
+            <div class="absolute inset bg-gradient-to-r from-transparent via-emerald-500/5 to-transparent -translate-x-full group-hover:animate-scan"></div>
+        </div>
 
+        <div class="grid gap-10">
+            {schools.map((edu:any, index:any) =>(
+                <div
+                    class="edu-module relative border border-slate-800 bg-slate-900/20 p-8 translation-all duration-500 hover:border-emerald-500/50 hover:bg-emerald-500/2 cursor-default overflow-hidden"
+                    data-school={edu.school}
+                >
+                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[lineargradient(to_right, #808080_1px, transparent_1px), linear_gradient(to_bottom, #808080_1px,transparent_1px)] bg-size-[20px_20px]"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex flex-wrap justify-between items-start gap-6 mb-10">
+                            <div class="flex-1">
+                                <div class={`w-2 h-2 rouded-full ${index === 0 ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-slate-600'}`}></div>
+                                <span class="font-mono text-[10px] text-slate-500 uppercase tracking-widest font-bold">Component 0x{index + 1}</span>
+                            </div>
+                            <h2 class="text-2xl font-black text-slate-100 mb-1 tracking-tight group-hover:text-emerald-400 transotion-colors">
+                                {edu.degree}
+                            </h2>
+                            <p class="text-emerald-500 font-mono text-xs uppercase italic">
+                                {edu.school}
+                            </p>
+                            <div class="mt-4 inliine-block px-2 py-1 border border-slate-800 font-mono text-[9px] text-slate-500">
+                                INIT: {edu.period.split(' to ')[0]} // END: {edu.period.split(' to ')[1]}
+                            </div>
+                        </div>
+
+                        {edu.gpa && (
+                            <div class="relative group/gpa">
+                                <div class="absolute -inset-2 bg-emerald-500/10 blur-xl opacity--0 group-hover/gpa:opacity-100 transition-opacity"></div>
+
+                                <div class="relative text-right p-4 border border-slate-800 bg-black/40">
+                                    <span class="block font-mono text-[8px] text-slate-600 mb-1 uppercase">PERFORMACE_RESULTS (GPA):</span>
+                                    <span class="text-3xl font-black text-slate-200 font-mono leading-none">{edu.gpa}</span>
+                                    <span class="text-[10px] text-slate-500 font-mono mll-1">/4.0</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 border-t border-slate-800/50 pt-8">
+                        {details[edu.id]?.awards?.length > 0 && (
+                                <div class="content-block opacity-60 hover:opacity-100 transition-opacity">
+                                    <h4 class="font-mono text-[10px] text-emerald-500 mb-4 flex items-center gap-2">
+                                    <span class="w-1 h-1 bg-emerald-500"></span> RECOGNITIONS
+                                    </h4>
+                                    <ul class="space-y-3">
+                                    {details[edu.id].awards.map(award => (
+                                        <li class="text-xs text-slate-400 font-mono flex items-start gap-3 group/item">
+                                        <span class="text-slate-700 group-hover/item:text-emerald-500 transition-colors mt-0.5">0x</span>
+                                        {award}
+                                        </li>
+                                    ))}
+                                    </ul>
+                                </div>
+                        )}
+                    </div>
+
+                    <div class="content-block opacity-60 hover:opacity-100 transition-opacity">
+                        {details[edu.id]?.coursework?.length > 0 && (
+                            <h4 class="font-mono text-[10px] text-emerald-500 mb-4 flex items-center gap-2">
+                                <span class="w-1 h-1 bg-emerald-500"></span> DEPENDENCIES (Courses)
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                {details[edu.id]?.coursework.map(course => (
+                                    <span class="px-2 py-1 text-[10px] font-mono border border-slate-800 text-slate-500 hover:text-emerald-400 hover:border-emerald-500/40 transition-all">
+                                        {course}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
 </Layout>

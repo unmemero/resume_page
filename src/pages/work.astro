@@ -29,6 +29,9 @@ const getHash = (str:string) => btoa(str).substring(0, 7).toLowerCase();
                     <span class="text-emerald-500 font-mono font-medium mr-2">[0x01]</span>
                     <span class="font-mono font-medium">DEPLOYMENT_HISTORY</span>
                 </h1>
+                <p class="font-mono text-[10px] text-slate-500 mt-2 uppercase tracking-widest">
+                    Status: Active | Total_Deployments: {sortedJobs.length} | Branch: Production
+                </p>
             </div>
             <div class="flex items-center gap-4 flex-wrap">
                 <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
