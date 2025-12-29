@@ -1,0 +1,226 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+import { marked } from 'marked';
+
+const entry = await getEntry('experience', 'experience');
+const jobs = entry?.data?.jobs || [];
+
+const parseDate = (d: string) => d === "Present" ? new Date() : new Date(d);
+const sortedJobs = jobs.sort((a: any, b: any) => parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime());
+const descriptions = entry?.body?.split(/^#\s+/m).filter(Boolean).reduce((acc, section) => {
+    const lines = section.split('\n');
+    const id = lines.shift()?.trim();
+    if (id) {
+        acc[id] = marked.parse(lines.join('\n'), {async: false}) as string;
+    }
+    return acc;
+}, {} as Record<string, string>) || {};
+
+const getHash = (str:string) => btoa(str).substring(0, 7).toLowerCase();
+---
+
+<Layout title="Work Experience">
+    <div class="max-w-4xl mx-auto py-10 px-4">
+        <!-- Header Section -->
+        <div class="mb-20 fade-in">
+            <div class="relative mb-6 border-b border-emerald-500/20 pb-6">
+                <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
+                    <span class="text-emerald-500 font-mono font-medium mr-2">[0x01]</span>
+                    <span class="font-mono font-medium">DEPLOYMENT_HISTORY</span>
+                </h1>
+            </div>
+            <div class="flex items-center gap-4 flex-wrap">
+                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
+                    <span class="text-emerald-400">●</span> On branch: <span class="text-slate-300">main</span>
+                </p>
+                <span class="text-slate-700">|</span>
+                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
+                    Status: <span class="text-emerald-400">Stable</span>
+                </p>
+                <span class="text-slate-700">|</span>
+                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
+                    Commits: <span class="text-emerald-400">{sortedJobs.length}</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="relative">
+            <!-- Animated Timeline Line -->
+            <div class="absolute left-[11px] top-2 bottom-0 w-[2px] bg-slate-800 dark:bg-slate-700 overflow-hidden">
+                <div class="timeline-gradient absolute inset-0 bg-gradient-to-b from-emerald-500 via-emerald-500/30 to-transparent"></div>
+            </div>
+
+            <!-- Jobs List -->
+            <div class="space-y-16">
+                {sortedJobs.map((job: any, index: number)=>(
+                    <div class="relative pl-10 group job-card" style={`--delay: ${index * 0.15}s`}>
+                        <!-- Timeline Node -->
+                        <div class={`timeline-node absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-slate-900 z-10 transition-all duration-500 group-hover:scale-125 ${
+                            job.current 
+                                ? 'bg-emerald-500 shadow-[0_0_20px_#10b981] animate-pulse' 
+                                : 'bg-slate-700 group-hover:bg-emerald-600 group-hover:shadow-[0_0_15px_#10b981]'
+                        }`}>
+                            <div class="absolute inset-0 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-20 animate-ping"></div>
+                        </div>
+                        
+                        <!-- Job Card -->
+                        <div class="job-content relative bg-gradient-to-br from-slate-900/60 to-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-lg backdrop-blur-sm transition-all duration-500 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:translate-x-1">
+                            <!-- Decorative Corner Accent -->
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-bl-full"></div>
+                            
+                            <!-- Header -->
+                            <div class="flex flex-wrap justify-between items-start gap-4 mb-6 relative z-10">
+                                <div class="flex-1 min-w-[200px]">
+                                    <div class="flex flex-wrap items-center gap-3 mb-2">
+                                        <h2 class="text-xl md:text-2xl font-bold text-slate-100 tracking-tight group-hover:text-emerald-400 transition-colors duration-300">
+                                            {job.title}
+                                        </h2>
+                                        <span class="font-mono text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors cursor-default">
+                                            #{getHash(job.company)}
+                                        </span>
+                                    </div>
+                                    <p class="font-mono text-sm md:text-base text-emerald-500 font-medium flex items-center gap-2">
+                                        <span class="text-slate-600">@</span>
+                                        <span class="hover:text-emerald-400 transition-colors">{job.company}</span>
+                                    </p>
+                                </div>
+
+                                <div class="text-right">
+                                    <span class="font-mono text-xs text-slate-400 uppercase tracking-widest block mb-2">
+                                        {job.range}
+                                    </span>
+                                    {job.current && (
+                                        <div class="flex items-center justify-end gap-2">
+                                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]"></div>
+                                            <span class="text-[10px] font-mono text-emerald-400 font-semibold tracking-wide">
+                                                ACTIVE
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="prose prose-invert prose-sm md:prose-base max-w-none mb-6
+                                prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-2
+                                prose-li:relative prose-li:pl-6
+                                prose-li:before:content-['▹'] prose-li:before:absolute prose-li:before:left-0
+                                prose-li:before:text-emerald-500 prose-li:before:font-bold
+                                prose-li:font-mono prose-li:text-slate-300 prose-li:leading-relaxed
+                                prose-li:hover:text-slate-200 prose-li:transition-colors">
+                                <Fragment set:html={descriptions?.[job.id] || '<p class="text-slate-500 italic">No description available</p>'} />
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="mt-6 pt-5 border-t border-slate-800/50 flex flex-wrap justify-between items-center gap-4">
+                                <code class="font-mono text-[10px] text-slate-600 hover:text-emerald-500/70 transition-colors cursor-default px-2 py-1 bg-slate-900/50 rounded">
+                                    git checkout -b {`${job.company.toLowerCase().replace(/\s+/g, '-')}/${job.title.toLowerCase().replace(/\s+/g,'-')}`}
+                                </code>
+                                <div class="flex gap-2 items-center">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500 transition-colors cursor-pointer"></div>
+                                        <div class="w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer"></div>
+                                        <div class="w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <!-- Footer Stats -->
+        <div class="mt-20 pt-10 border-t border-slate-800/50 fade-in" style="--delay: 1s">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                    <div class="font-mono text-3xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
+                        {sortedJobs.length}
+                    </div>
+                    <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Total Positions</div>
+                </div>
+                <div class="text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                    <div class="font-mono text-3xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
+                        {sortedJobs.filter((j: any) => j.current).length}
+                    </div>
+                    <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Active Roles</div>
+                </div>
+                <div class="text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                    <div class="font-mono text-3xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
+                        {new Date().getFullYear() - Math.min(...sortedJobs.map((j: any) => new Date(j.startDate).getFullYear()))}+
+                    </div>
+                    <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style is:global>
+    .prose ul li {
+        margin-bottom: 0.75rem;
+        line-height: 1.7;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+        }
+        to {
+            transform: translateY(100%);
+        }
+    }
+    
+    .fade-in {
+        animation: fadeInUp 0.8s ease-out forwards;
+        animation-delay: var(--delay, 0s);
+        opacity: 0;
+    }
+    
+    .job-card {
+        animation: fadeInUp 0.8s ease-out forwards;
+        animation-delay: var(--delay, 0s);
+        opacity: 0;
+    }
+    
+    .timeline-gradient {
+        animation: slideDown 3s ease-in-out infinite;
+    }
+    
+    .job-content:hover .prose li {
+        transform: translateX(2px);
+    }
+    
+    .timeline-node {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    
+    .timeline-node:hover {
+        animation: pulse-ring 1.5s ease-out infinite;
+    }
+    
+    @keyframes pulse-ring {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+</style>

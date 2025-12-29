@@ -72,11 +72,11 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
     
     // Determine color based on tier
     if (segmentIndex > fraction * 2) {
-        return "bg-emerald-500 shadow-[0_0_8px_#10b981]"; // High/Master
+        return "bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse"; // High/Master
     } else if (segmentIndex > fraction) {
-        return "bg-yellow-500 shadow-[0_0_8px_#ecc94b]"; // Mid/Familiar
+        return "bg-yellow-500 shadow-[0_0_8px_#ecc94b] animate-pulse"; // Mid/Familiar
     } else {
-        return "bg-orange-600 shadow-[0_0_8px_#dd6b20]"; // Low/Early
+        return "bg-orange-600 shadow-[0_0_8px_#dd6b20] animate-pulse"; // Low/Early
     }
 };
 ---

@@ -5,6 +5,12 @@ const skills = defineCollection({
     schema: z.any().optional(),
 });
 
+const experience = defineCollection({
+    type: 'content',
+    schema: z.any().optional(),
+});
+
 export const collections = {
     'skills': skills,
+    'experience': experience
 };
