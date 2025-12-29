@@ -24,90 +24,314 @@ const details = parseDetails(entry?.body || '');
 ---
 
 <Layout title="Education">
-    <div class="max-w-4xl mx-auto py-10 px-4">
-        <div class="relative mb-6 border-b border-emerald-500/20 pb-6">
-            <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
-                <span class="text-emerald-500 font-mono font-medium mr-2">[0x02]</span>
-                <span class="font-mono font-medium">EDUCATION_MODULES</span>
-            </h1>
-            <p id="status-text" class="font-mono text-[10px] text-slate-500 mt-2 uppercase tracking-widest">
-                SYSTEM_READY // RUNNING
-            </p>
-            <div class="absolute inset bg-linear-to-r from-transparent via-emerald-500/5 to-transparent -translate-x-full group-hover:animate-scan"></div>
+    <div class="max-w-6xl mx-auto py-10 px-4">
+        <!-- Header -->
+        <div class="mb-12">
+            <div class="relative mb-6 border-b border-emerald-500/20 pb-6">
+                <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
+                    <span class="text-emerald-500 font-mono font-medium mr-2">[0x02]</span>
+                    <span class="font-mono font-medium">EDUCATION_MODULES</span>
+                </h1>
+                <p class="font-mono text-[10px] text-slate-500 mt-2 uppercase tracking-widest">
+                    Status: <span class="text-emerald-400">Initialized</span> | 
+                    Institutions: <span class="text-emerald-400">{schools.length}</span> | 
+                    Mode: <span class="text-emerald-400">Academic</span>
+                </p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="flex flex-wrap gap-3 mb-8">
+                <button 
+                    class="filter-btn active px-4 py-2 font-mono text-xs border border-emerald-500 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-all rounded uppercase tracking-wider"
+                    data-filter="all"
+                >
+                    [SHOW_ALL]
+                </button>
+                <button 
+                    id="expand-all"
+                    class="px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                >
+                    [▼_EXPAND]
+                </button>
+                <button 
+                    id="collapse-all"
+                    class="px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                >
+                    [▲_COLLAPSE]
+                </button>
+            </div>
         </div>
 
+        <!-- Education Cards -->
         <div class="grid gap-10">
             {schools.map((edu:any, index:any) =>(
                 <div
-                    class="edu-module relative border border-slate-800 bg-slate-900/20 p-8 translation-all duration-500 hover:border-emerald-500/50 hover:bg-emerald-500/2 cursor-default overflow-hidden"
+                    class="edu-module relative border border-slate-800 bg-linear-to-br from-slate-900/60 to-slate-900/40 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-500 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]"
                     data-school={edu.school}
+                    data-index={index}
+                    style={`animation-delay: ${index * 0.15}s`}
                 >
-                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[lineargradient(to_right, #808080_1px, transparent_1px), linear_gradient(to_bottom, #808080_1px,transparent_1px)] bg-size-[20px_20px]"></div>
+                    <!-- Corner Decorations -->
+                    <div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-emerald-500/30"></div>
+                    <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-emerald-500/30"></div>
+                    <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-emerald-500/30"></div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-emerald-500/30"></div>
 
-                    <div class="relative z-10">
-                        <div class="flex flex-wrap justify-between items-start gap-6 mb-10">
-                            <div class="flex-1">
-                                <div class={`w-2 h-2 rouded-full ${index === 0 ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-slate-600'}`}></div>
-                                <span class="font-mono text-[10px] text-slate-500 uppercase tracking-widest font-bold">Component 0x{index + 1}</span>
-                            </div>
-                            <h2 class="text-2xl font-black text-slate-100 mb-1 tracking-tight group-hover:text-emerald-400 transotion-colors">
-                                {edu.degree}
-                            </h2>
-                            <p class="text-emerald-500 font-mono text-xs uppercase italic">
-                                {edu.school}
-                            </p>
-                            <div class="mt-4 inliine-block px-2 py-1 border border-slate-800 font-mono text-[9px] text-slate-500">
-                                INIT: {edu.period.split(' to ')[0]} // END: {edu.period.split(' to ')[1]}
-                            </div>
-                        </div>
-
-                        {edu.gpa && (
-                            <div class="relative group/gpa">
-                                <div class="absolute -inset-2 bg-emerald-500/10 blur-xl opacity--0 group-hover/gpa:opacity-100 transition-opacity"></div>
-
-                                <div class="relative text-right p-4 border border-slate-800 bg-black/40">
-                                    <span class="block font-mono text-[8px] text-slate-600 mb-1 uppercase">PERFORMACE_RESULTS (GPA):</span>
-                                    <span class="text-3xl font-black text-slate-200 font-mono leading-none">{edu.gpa}</span>
-                                    <span class="text-[10px] text-slate-500 font-mono mll-1">/4.0</span>
+                    <!-- Clickable Header -->
+                    <div class="edu-header relative z-10 p-6 md:p-8 pb-4 cursor-pointer hover:bg-emerald-500/5 transition-all" data-collapsed="false">
+                        <div class="flex flex-wrap justify-between items-start gap-6">
+                            <div class="flex items-start gap-4 flex-1">
+                                <div class="flex flex-col items-center gap-2 pt-1">
+                                    <div class={`w-3 h-3 rounded-full transition-all duration-300 ${
+                                        index === 0 
+                                            ? 'bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse' 
+                                            : 'bg-slate-600 hover:bg-emerald-500/50'
+                                    }`}></div>
+                                    <span class="collapse-icon text-emerald-500 font-mono text-sm transition-transform duration-300">▼</span>
+                                </div>
+                                
+                                <div class="flex-1">
+                                    <span class="font-mono text-[10px] text-slate-600 uppercase tracking-widest block mb-3">
+                                        Module_0x{(index + 1).toString().padStart(2, '0')}
+                                    </span>
+                                    <h2 class="text-xl md:text-2xl font-bold text-slate-100 mb-3 tracking-tight group-hover:text-emerald-400 transition-colors">
+                                        {edu.degree}
+                                    </h2>
+                                    <p class="text-emerald-400 font-mono text-sm uppercase flex items-center gap-2 mb-3">
+                                        <span class="text-slate-600">@</span>
+                                        {edu.school}
+                                    </p>
+                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-700 bg-slate-900/50 font-mono text-[10px] text-slate-500 rounded">
+                                        <span class="text-emerald-500">▸</span>
+                                        {edu.period.split(' to ')[0]} 
+                                        <span class="text-slate-700">→</span> 
+                                        {edu.period.split(' to ')[1]}
+                                    </div>
                                 </div>
                             </div>
-                        )}
+
+                            {edu.gpa && (
+                                <div class="gpa-card relative group/gpa cursor-pointer">
+                                    <div class="absolute -inset-2 bg-emerald-500/10 blur-xl opacity-0 group-hover/gpa:opacity-100 transition-opacity"></div>
+                                    <div class="relative p-4 border border-slate-800 bg-slate-900/80 rounded hover:border-emerald-500/50 transition-all">
+                                        <span class="block font-mono text-[9px] text-slate-600 mb-2 uppercase tracking-wider">Performance_Index</span>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="text-3xl font-black text-emerald-400 font-mono leading-none">{edu.gpa}</span>
+                                            <span class="text-xs text-slate-500 font-mono">/4.0</span>
+                                        </div>
+                                        <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+                                            <div 
+                                                class="h-full bg-linear-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-1000"
+                                                style={`width: ${(parseFloat(edu.gpa) / 4.0) * 100}%`}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-8 border-t border-slate-800/50 pt-8">
-                        {details[edu.id]?.awards?.length > 0 && (
-                                <div class="content-block opacity-60 hover:opacity-100 transition-opacity">
-                                    <h4 class="font-mono text-[10px] text-emerald-500 mb-4 flex items-center gap-2">
-                                    <span class="w-1 h-1 bg-emerald-500"></span> RECOGNITIONS
+                    <!-- Collapsible Content -->
+                    <div class="edu-content transition-all duration-300">
+                        <div class="p-6 md:p-8 pt-4 space-y-6">
+                            <!-- Awards Section -->
+                            {details[edu.id]?.awards?.length > 0 && (
+                                <div class="award-section border-l-2 border-emerald-500/50 pl-6 py-2">
+                                    <h4 class="font-mono text-xs text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
+                                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> 
+                                        Recognitions
                                     </h4>
                                     <ul class="space-y-3">
-                                    {details[edu.id].awards.map(award => (
-                                        <li class="text-xs text-slate-400 font-mono flex items-start gap-3 group/item">
-                                        <span class="text-slate-700 group-hover/item:text-emerald-500 transition-colors mt-0.5">0x</span>
-                                        {award}
-                                        </li>
-                                    ))}
+                                        {details[edu.id].awards.map((award, awardIndex) => (
+                                            <li 
+                                                class="award-item text-sm text-slate-300 font-mono flex items-start gap-3 group/item hover:text-emerald-300 transition-all cursor-pointer p-2 rounded hover:bg-emerald-500/5"
+                                                style={`animation-delay: ${(awardIndex * 0.05)}s`}
+                                            >
+                                                <span class="text-slate-700 group-hover/item:text-emerald-500 transition-colors mt-0.5">▹</span>
+                                                <span class="flex-1">{award}</span>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
-                        )}
-                    </div>
+                            )}
 
-                    <div class="content-block opacity-60 hover:opacity-100 transition-opacity">
-                        {details[edu.id]?.coursework?.length > 0 && (
-                            <h4 class="font-mono text-[10px] text-emerald-500 mb-4 flex items-center gap-2">
-                                <span class="w-1 h-1 bg-emerald-500"></span> DEPENDENCIES (Courses)
-                            </h4>
-                            <div class="flex flex-wrap gap-2">
-                                {details[edu.id]?.coursework.map(course => (
-                                    <span class="px-2 py-1 text-[10px] font-mono border border-slate-800 text-slate-500 hover:text-emerald-400 hover:border-emerald-500/40 transition-all">
-                                        {course}
-                                    </span>
-                                ))}
+                            <!-- Coursework Section -->
+                            {details[edu.id]?.coursework?.length > 0 && (
+                                <div class="coursework-section border-l-2 border-slate-700 pl-6 py-2">
+                                    <h4 class="font-mono text-xs text-slate-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
+                                        <span class="w-2 h-2 bg-slate-600 rounded-full"></span> 
+                                        Key Modules
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        {details[edu.id].coursework.map((course, courseIndex) => (
+                                            <span 
+                                                class="course-tag px-3 py-1.5 text-xs font-mono border border-slate-700 text-slate-400 bg-slate-900/50 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all cursor-pointer rounded"
+                                                style={`animation-delay: ${(courseIndex * 0.03)}s`}
+                                            >
+                                                {course}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <!-- Footer Info -->
+                        <div class="px-6 md:px-8 pb-6">
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-800/50">
+                                <code class="font-mono text-[10px] text-slate-700 hover:text-emerald-500/70 transition-colors">
+                                    <span class="text-slate-600">#</span> education/{edu.school.toLowerCase().replace(/\s+/g, '-')}
+                                </code>
+                                <div class="flex gap-1.5">
+                                    <div class="status-indicator w-2 h-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500 transition-colors cursor-pointer" title="Completed"></div>
+                                    <div class="status-indicator w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer" title="Verified"></div>
+                                    <div class="status-indicator w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer" title="Archived"></div>
+                                </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
             ))}
         </div>
     </div>
+
+    <script>
+        // Expand/Collapse functionality
+        const expandBtn = document.getElementById('expand-all');
+        const collapseBtn = document.getElementById('collapse-all');
+        const eduHeaders = document.querySelectorAll('.edu-header');
+
+        expandBtn?.addEventListener('click', () => {
+            eduHeaders.forEach(header => {
+                const content = header.nextElementSibling as HTMLElement;
+                const icon = header.querySelector('.collapse-icon') as HTMLElement;
+                content?.classList.remove('collapsed');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+                (header as HTMLElement).dataset.collapsed = 'false';
+            });
+        });
+
+        collapseBtn?.addEventListener('click', () => {
+            eduHeaders.forEach(header => {
+                const content = header.nextElementSibling as HTMLElement;
+                const icon = header.querySelector('.collapse-icon') as HTMLElement;
+                content?.classList.add('collapsed');
+                if (icon) icon.style.transform = 'rotate(-90deg)';
+                (header as HTMLElement).dataset.collapsed = 'true';
+            });
+        });
+
+        // Toggle individual education modules
+        eduHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling as HTMLElement;
+                const icon = header.querySelector('.collapse-icon') as HTMLElement;
+                const isCollapsed = (header as HTMLElement).dataset.collapsed === 'true';
+
+                if (isCollapsed) {
+                    content?.classList.remove('collapsed');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                    (header as HTMLElement).dataset.collapsed = 'false';
+                } else {
+                    content?.classList.add('collapsed');
+                    if (icon) icon.style.transform = 'rotate(-90deg)';
+                    (header as HTMLElement).dataset.collapsed = 'true';
+                }
+            });
+        });
+
+        // GPA card click animation
+        const gpaCards = document.querySelectorAll('.gpa-card');
+        gpaCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                card.classList.add('scale-95');
+                setTimeout(() => {
+                    card.classList.remove('scale-95');
+                }, 150);
+            });
+        });
+
+        // Course tag click animation
+        const courseTags = document.querySelectorAll('.course-tag');
+        courseTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.add('scale-110');
+                setTimeout(() => {
+                    tag.classList.remove('scale-110');
+                }, 200);
+            });
+        });
+
+        // Status indicator click
+        const statusIndicators = document.querySelectorAll('.status-indicator');
+        statusIndicators.forEach(indicator => {
+            indicator.addEventListener('click', (e) => {
+                e.stopPropagation();
+                indicator.classList.add('animate-ping');
+                setTimeout(() => {
+                    indicator.classList.remove('animate-ping');
+                }, 1000);
+            });
+        });
+
+        // Award items hover effect
+        const awardItems = document.querySelectorAll('.award-item');
+        awardItems.forEach(item => {
+            item.addEventListener('click', () => {
+                (item as HTMLElement).style.transform = 'translateX(4px)';
+                setTimeout(() => {
+                    (item as HTMLElement).style.transform = 'translateX(0)';
+                }, 200);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .edu-module {
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .edu-content {
+            max-height: 2000px;
+            opacity: 1;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+
+        .edu-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .award-item,
+        .course-tag {
+            animation: slideInUp 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .scale-95 {
+            transform: scale(0.95);
+            transition: transform 0.15s;
+        }
+
+        .scale-110 {
+            transform: scale(1.1);
+            transition: transform 0.2s;
+        }
+    </style>
 </Layout>

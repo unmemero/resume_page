@@ -28,7 +28,7 @@ export default function AnimatedBackground() {
       connectionDistance: 150,
       mouseRadius: 200,
       baseSpeed: 0.3,
-      color: { r: 16, g: 185, b: 129 }, // emerald
+      color: { r: Math.floor(Math.random() * 256), g: Math.floor(Math.random() * 256), b: Math.floor(Math.random() * 256) }, // emerald
     };
 
     // Set canvas size
