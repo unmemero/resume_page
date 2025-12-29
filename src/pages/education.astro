@@ -1,7 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+
+const entry = await getEntry('education', 'education');
+const { schools } = entry?.data;
+
+const parseDetails = (text: string) => {
+    const sections = text.split(/^#\s+/m).filter(Boolean);
+    return sections.reduce((acc, section) => {
+        const lines = section.split('\n').filter(l => l.trim());
+        const id = lines.shift()?.trim();
+        const content = lines.join('\n');
+        //TODO: FINISH FUNCTION
+        
+        return acc;
+    })
+}
 ---
 
 <Layout title="Education">
-    
+
 </Layout>
