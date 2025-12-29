@@ -63,7 +63,7 @@ const getActiveSegments = (months: number) => {
  */
 const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
     const totalSegments = 12;
-    const fraction = totalSegments / 12;
+    const fraction = totalSegments / 8;
     
     // Check if segment is active
     if (segmentIndex > activeSegments) {
@@ -74,9 +74,9 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
     if (segmentIndex > fraction * 2) {
         return "bg-emerald-500 shadow-[0_0_8px_#10b981]"; // High/Master
     } else if (segmentIndex > fraction) {
-        return "bg-yellow-500"; // Mid/Familiar
+        return "bg-yellow-500 shadow-[0_0_8px_#ecc94b]"; // Mid/Familiar
     } else {
-        return "bg-orange-600"; // Low/Early
+        return "bg-orange-600 shadow-[0_0_8px_#dd6b20]"; // Low/Early
     }
 };
 ---
