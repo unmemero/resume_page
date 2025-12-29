@@ -1,35 +1,84 @@
 ---
-import { span } from "framer-motion/client";
 import Layout from "../layouts/Layout.astro";
 import { getEntry } from 'astro:content';
 
-//Fetch material
+// 1. Fetch Material
 const entry = await getEntry('skills', 'skills');
-console.log(entry)
 const rawContent = entry?.body || '';
 
-//Category parser
-const parseSkills = (text: string) =>{
-    const sections = text.split(/^#\s+/m).filter(Boolean);
-
+// 2. Category Parser
+const parseSkills = (text: string) => {
+    const sections = text.trim().split(/^#\s+/m).filter(Boolean);
     return sections.map(section => {
         const lines = section.split('\n').filter(l => l.trim());
-        const header = lines.shift() || 'UKNOWN_MODULE'
+        const header = lines.shift() || 'UNKNOWN_MODULE';
         const skills = lines.map(line => {
             const match = line.match(/^-\s*(\*?)(.*?):\s*(.*)$/);
             if (!match) return null;
-
             return {
                 isStarred: match[1] === '*',
                 name: match[2].trim(),
                 duration: match[3].trim()
             };
         }).filter((skill): skill is { isStarred: boolean; name: string; duration: string } => skill !== null);
-        return {header, skills};
+        return { header, skills };
     });
 };
 
 const modules = parseSkills(rawContent);
+
+// 3. Normalization & Logarithmic Math
+// Convert all durations to months to create a dataset
+const allSkillsFlat = modules.flatMap(m => m.skills).map(s => {
+    const amount = parseInt(s.duration.split(' ')[0]) || 0;
+    const isYear = s.duration.toLowerCase().includes('year');
+    return { ...s, totalMonths: isYear ? amount * 12 : amount };
+});
+
+const monthValues = allSkillsFlat.map(s => s.totalMonths);
+const minMonths = Math.min(...monthValues);
+const maxMonths = Math.max(...monthValues);
+
+/**
+ * Normalizes value using Logarithmic scaling to prevent 
+ * long-term legacy skills from washing out newer ones.
+ */
+const getActiveSegments = (months: number) => {
+    const totalSegments = 12;
+    if (maxMonths === minMonths) return totalSegments;
+
+    // Logarithmic scale: log(val) / log(max)
+    // We add 1 to avoid log(0) and log(1) issues
+    const logMax = Math.log(maxMonths + 1);
+    const logMin = Math.log(minMonths + 1);
+    const logVal = Math.log(months + 1);
+
+    const normalized = (logVal - logMin) / (logMax - logMin);
+    return Math.max(1, Math.round(normalized * totalSegments));
+};
+
+/**
+ * Gets the color class for a segment based on its index and active segments.
+ * Avoids <= operators in JSX to prevent parser conflicts.
+ */
+const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
+    const totalSegments = 12;
+    const fraction = totalSegments / 12;
+    
+    // Check if segment is active
+    if (segmentIndex > activeSegments) {
+        return "bg-slate-800/40"; // Inactive
+    }
+    
+    // Determine color based on tier
+    if (segmentIndex > fraction * 2) {
+        return "bg-emerald-500 shadow-[0_0_8px_#10b981]"; // High/Master
+    } else if (segmentIndex > fraction) {
+        return "bg-yellow-500"; // Mid/Familiar
+    } else {
+        return "bg-orange-600"; // Low/Early
+    }
+};
 ---
 
 <Layout title="System Skills">
@@ -39,43 +88,63 @@ const modules = parseSkills(rawContent);
                 <span class="text-emerald-500 font-mono text-sm mr-2">[0x00]</span> Manifest
             </h1>
             <p class="font-mono text-[10px] text-slate-500 mt-2 uppercase tracking-widest">
-                Status Online | MOdules Detected: {modules.length}
+                Status: Online | Modules_Detected: {modules.length}
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {modules.map(module => (
-                <section class="relative group border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-6 rounded-sm">
-                    <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-slate-300 dark:border-slate-700"></div>
-                    <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-slate-300 dark:border-slate-700"></div>
+                <section class="relative border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-6 rounded-sm">
+                    {/* Hardware Brackets */}
+                    <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-slate-400 dark:border-slate-700"></div>
+                    <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-slate-400 dark:border-slate-700"></div>
                 
                     <header class="flex justify-between items-center mb-6">
-                        <h2 class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-500 tracking-widest uppercase">
+                        <h2 class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase">
                             // {module.header}
                         </h2>
                         <div class="flex gap-1">
-                            <div class="w-1.5 h1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                            <div class="w-1.5 h1.5 rounded-full bg-slate-700"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
                         </div>
                     </header>
 
-                    <div class="space-y-4">
-                        {module.skills.map(skill => (
-                            <div class={`group relative p-3 border-l-2 transition-all ${skill.isStarred ? 'border-emerald-500 bg-emerald-500/5' : 'border-slate-800 hover:border-slate-600'}`}>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class={`font-mono text-xs tracking-tight ${skill.isStarred ? 'text-slate-100 font-bold' : 'text-slate-400'}`}>
-                                        {skill.isStarred && <span  class="text-emerald-500 mr-1">»</span>}
-                                        {skill.name}
-                                    </span>
-                                    <span class="font-mono text-[9px] text-slate-500 uppercase">{skill.duration}</span>
+                    <div class="space-y-6">
+                        {module.skills.map((skill) => {
+                            // 1. Math Logic inside the block
+                            const amount = parseInt(skill.duration.split(' ')[0]) || 0;
+                            const isYear = skill.duration.toLowerCase().includes('year');
+                            const months = isYear ? amount * 12 : amount;
+                            
+                            const activeSegments = getActiveSegments(months);
+                            const totalSegments = 12;
+                            const third = totalSegments / 3;
+
+                            // 2. RETURN a single <div>, not a Fragment with attributes
+                            return (
+                                <div class={`group p-3 border-l-2 transition-all ${skill.isStarred ? 'border-emerald-500 bg-emerald-500/5' : 'border-slate-800 hover:border-slate-700'}`}>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class={`font-mono text-xs tracking-tight ${skill.isStarred ? 'text-white font-bold' : 'text-slate-400'}`}>
+                                            {skill.isStarred && <span class="text-emerald-500 mr-1">»</span>}
+                                            {skill.name}
+                                        </span>
+                                        <span class="font-mono text-[9px] text-slate-500 uppercase">{skill.duration}</span>
+                                    </div>
+
+                                    {/* BIT_METER GAUGE */}
+                                    <div class="flex gap-1 h-1.5 mt-2">
+                                        {[...Array(totalSegments)].map((_, i) => {
+                                            const segmentIndex = i + 1;
+                                            const colorClass = getSegmentColorClass(segmentIndex, activeSegments);
+
+                                            return (
+                                                <div class={`flex-1 rounded-sm transition-all duration-500 ${colorClass}`} />
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="flex gap-0.5 h-1.5 mt-2">
-                                {/* DURATION RENDERING LOGIC */}
-
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </section>
             ))}

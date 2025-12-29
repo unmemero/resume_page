@@ -15,3 +15,4 @@
 
 # [HUMAN] SOFT SKILLS
 - Leadership: 4 months
+- Microsoft Office: 9 years
