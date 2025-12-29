@@ -22,7 +22,6 @@ const getHash = (str:string) => btoa(str).substring(0, 7).toLowerCase();
 
 <Layout title="Work Experience">
     <div class="max-w-4xl mx-auto py-10 px-4">
-        <!-- Header Section -->
         <div class="mb-20 fade-in">
             <div class="relative mb-6 border-b border-emerald-500/20 pb-6">
                 <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
@@ -33,50 +32,60 @@ const getHash = (str:string) => btoa(str).substring(0, 7).toLowerCase();
                     Status: Active | Total_Deployments: {sortedJobs.length} | Branch: Production
                 </p>
             </div>
-            <div class="flex items-center gap-4 flex-wrap">
-                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
-                    <span class="text-emerald-400">●</span> On branch: <span class="text-slate-300">main</span>
-                </p>
-                <span class="text-slate-700">|</span>
-                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
-                    Status: <span class="text-emerald-400">Stable</span>
-                </p>
-                <span class="text-slate-700">|</span>
-                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest">
-                    Commits: <span class="text-emerald-400">{sortedJobs.length}</span>
-                </p>
+            <div class="flex items-center gap-3 flex-wrap">
+                <button 
+                    class="filter-btn active px-4 py-2 font-mono text-xs border border-emerald-500 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-all rounded uppercase tracking-wider"
+                    data-filter="all"
+                >
+                    [SHOW_ALL]
+                </button>
+                <button 
+                    class="filter-btn px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                    data-filter="current"
+                >
+                    [ACTIVE_ONLY]
+                </button>
+                <button 
+                    id="expand-all-btn"
+                    class="px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                >
+                    [▼_EXPAND]
+                </button>
+                <button 
+                    id="collapse-all-btn"
+                    class="px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                >
+                    [▲_COLLAPSE]
+                </button>
             </div>
         </div>
 
-        <!-- Timeline -->
         <div class="relative">
-            <!-- Animated Timeline Line -->
             <div class="absolute left-2.75 top-2 bottom-0 w-0.5 bg-slate-800 dark:bg-slate-700 overflow-hidden">
                 <div class="timeline-gradient absolute inset-0 bg-linear-to-b from-emerald-500 via-emerald-500/30 to-transparent"></div>
             </div>
 
-            <!-- Jobs List -->
             <div class="space-y-16">
-                {sortedJobs.map((job: any, index: number)=>(
-                    <div class="relative pl-10 group job-card" style={`--delay: ${index * 0.15}s`}>
-                        <!-- Timeline Node -->
-                        <div class={`timeline-node absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-slate-900 z-10 transition-all duration-500 group-hover:scale-125 ${
-                            job.current 
-                                ? 'bg-emerald-500 shadow-[0_0_20px_#10b981] animate-pulse' 
-                                : 'bg-slate-700 group-hover:bg-emerald-600 group-hover:shadow-[0_0_15px_#10b981]'
-                        }`}>
+                {sortedJobs.map((job: any, index: number) => (
+                    <div 
+                        class="relative pl-10 group job-card" 
+                        style={`--delay: ${index * 0.15}s`}
+                        data-job-id={job.id}
+                        data-current={job.current}
+                    >
+                        <div class={`timeline-node absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-slate-900 z-10 transition-all duration-500 group-hover:scale-125 cursor-pointer ${job.current ? 'bg-emerald-500 shadow-[0_0_20px_#10b981] animate-pulse' : 'bg-slate-700 group-hover:bg-emerald-600 group-hover:shadow-[0_0_15px_#10b981]'}`}
+                            title="Click to toggle details"
+                        >
                             <div class="absolute inset-0 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-20 animate-ping"></div>
                         </div>
                         
-                        <!-- Job Card -->
-                        <div class="job-content relative bg-linear-to-br from-slate-900/60 to-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-lg backdrop-blur-sm transition-all duration-500 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:translate-x-1">
-                            <!-- Decorative Corner Accent -->
+                        <div class="job-content relative bg-linear-to-br from-slate-900/60 to-slate-900/40 border border-slate-800 rounded-lg backdrop-blur-sm transition-all duration-500 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]">
                             <div class="absolute top-0 right-0 w-20 h-20 bg-linear-to-br from-emerald-500/5 to-transparent rounded-bl-full"></div>
                             
-                            <!-- Header -->
-                            <div class="flex flex-wrap justify-between items-start gap-4 mb-6 relative z-10">
+                            <div class="job-header flex flex-wrap justify-between items-start gap-4 mb-6 relative z-10 cursor-pointer p-6 md:p-8 pb-0 hover:bg-emerald-500/5 transition-all rounded-t-lg">
                                 <div class="flex-1 min-w-50">
                                     <div class="flex flex-wrap items-center gap-3 mb-2">
+                                        <span class="collapse-icon text-emerald-500 font-mono text-sm transition-transform duration-300">▼</span>
                                         <h2 class="text-xl md:text-2xl font-bold text-slate-100 tracking-tight group-hover:text-emerald-400 transition-colors duration-300">
                                             {job.title}
                                         </h2>
@@ -105,58 +114,69 @@ const getHash = (str:string) => btoa(str).substring(0, 7).toLowerCase();
                                 </div>
                             </div>
 
-                            <!-- Description -->
-                            <div class="prose prose-invert prose-sm md:prose-base max-w-none mb-6
-                                prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-2
-                                prose-li:relative prose-li:pl-6
-                                prose-li:before:content-['▹'] prose-li:before:absolute prose-li:before:left-0
-                                prose-li:before:text-emerald-500 prose-li:before:font-bold
-                                prose-li:font-mono prose-li:text-slate-300 prose-li:leading-relaxed
-                                prose-li:hover:text-slate-200 prose-li:transition-colors">
-                                <Fragment set:html={descriptions?.[job.id] || '<p class="text-slate-500 italic">No description available</p>'} />
-                            </div>
+                            <div class="job-details transition-all duration-300 overflow-hidden p-6 md:p-8 pt-0">
+                                <div class="prose prose-invert prose-sm md:prose-base max-w-none mb-6
+                                    prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-2
+                                    prose-li:relative prose-li:pl-6
+                                    prose-li:before:content-['▹'] prose-li:before:absolute prose-li:before:left-0
+                                    prose-li:before:text-emerald-500 prose-li:before:font-bold
+                                    prose-li:font-mono prose-li:text-slate-300 prose-li:leading-relaxed
+                                    prose-li:hover:text-slate-200 prose-li:transition-colors">
+                                    <Fragment set:html={descriptions?.[job.id] || '<p class="text-slate-500 italic">No description available</p>'} />
+                                </div>
 
-                            <!-- Footer -->
-                            <div class="mt-6 pt-5 border-t border-slate-800/50 flex flex-wrap justify-between items-center gap-4">
-                                <code class="font-mono text-[10px] text-slate-600 hover:text-emerald-500/70 transition-colors cursor-default px-2 py-1 bg-slate-900/50 rounded">
-                                    git checkout -b {`${job.company.toLowerCase().replace(/\s+/g, '-')}/${job.title.toLowerCase().replace(/\s+/g,'-')}`}
-                                </code>
-                                <div class="flex gap-2 items-center">
-                                    <div class="flex gap-1.5">
-                                        <div class="w-2 h-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500 transition-colors cursor-pointer"></div>
-                                        <div class="w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer"></div>
-                                        <div class="w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer"></div>
+                                {/* Footer - Fixed Comment Syntax */}
+                                <div class="mt-6 pt-5 border-t border-slate-800/50 flex flex-wrap justify-between items-center gap-4">
+                                    <code 
+                                        class="git-command font-mono text-[10px] text-slate-600 hover:text-emerald-500 transition-colors cursor-pointer px-3 py-2 bg-slate-900/50 rounded hover:bg-emerald-500/10 border border-slate-800 hover:border-emerald-500/50"
+                                        title="Click to copy"
+                                        data-command={`git checkout ${job.id}`}
+                                    >
+                                        $ git checkout {job.id}
+                                    </code>
+                                    <div class="flex gap-2 items-center">
+                                        <div class="flex gap-1.5">
+                                            <div class="status-dot w-2 h-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500 transition-colors cursor-pointer" title="Active"></div>
+                                            <div class="status-dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer" title="Idle"></div>
+                                            <div class="status-dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-colors cursor-pointer" title="Archived"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </div> {/* Closes job-details */}
+                        </div> {/* Closes job-content */}
+                    </div> // <--- FIXED: Closes job-card (This was missing)
                 ))}
             </div>
         </div>
 
-        <!-- Footer Stats -->
         <div class="mt-20 pt-10 border-t border-slate-800/50 fade-in" style="--delay: 1s">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group cursor-pointer">
                     <div class="font-mono text-3xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {sortedJobs.length}
                     </div>
                     <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Total Positions</div>
                 </div>
-                <div class="text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group cursor-pointer">
                     <div class="font-mono text-3xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {sortedJobs.filter((j: any) => j.current).length}
                     </div>
                     <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Active Roles</div>
                 </div>
-                <div class="text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all group cursor-pointer">
                     <div class="font-mono text-3xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {new Date().getFullYear() - Math.min(...sortedJobs.map((j: any) => new Date(j.startDate).getFullYear()))}+
                     </div>
                     <div class="font-mono text-xs text-slate-500 uppercase tracking-widest">Years Experience</div>
                 </div>
             </div>
+        </div>
+
+        <div 
+            id="toast" 
+            class="fixed bottom-8 right-8 px-6 py-3 bg-emerald-500 text-slate-900 font-mono text-sm rounded-lg shadow-lg transform translate-y-32 opacity-0 transition-all duration-300 z-50"
+        >
+            ✓ Copied to clipboard!
         </div>
     </div>
 </Layout>
@@ -226,4 +246,151 @@ const getHash = (str:string) => btoa(str).substring(0, 7).toLowerCase();
             box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
         }
     }
+
+    .job-details {
+        max-height: 2000px;
+        opacity: 1;
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .job-details.collapsed {
+        max-height: 0;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 </style>
+
+<script>
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const jobCards = document.querySelectorAll('.job-card');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = (btn as HTMLElement).dataset.filter;
+            
+            // Update active button
+            filterButtons.forEach(b => {
+                b.classList.remove('active', 'border-emerald-500', 'bg-emerald-500/10', 'text-emerald-400');
+                b.classList.add('border-slate-700', 'bg-slate-900/50', 'text-slate-400');
+            });
+            btn.classList.add('active', 'border-emerald-500', 'bg-emerald-500/10', 'text-emerald-400');
+            btn.classList.remove('border-slate-700', 'bg-slate-900/50', 'text-slate-400');
+
+            // Filter jobs
+            jobCards.forEach(card => {
+                const htmlCard = card as HTMLElement;
+                if (filter === 'all') {
+                    htmlCard.style.display = 'block';
+                } else if (filter === 'current') {
+                    if (htmlCard.dataset.current === 'true') {
+                        htmlCard.style.display = 'block';
+                    } else {
+                        htmlCard.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+
+    // Expand/Collapse all
+    const expandAllBtn = document.getElementById('expand-all-btn');
+    const collapseAllBtn = document.getElementById('collapse-all-btn');
+    const jobHeaders = document.querySelectorAll('.job-header');
+
+    expandAllBtn?.addEventListener('click', () => {
+        jobHeaders.forEach(header => {
+            const details = header.nextElementSibling as HTMLElement;
+            const icon = header.querySelector('.collapse-icon') as HTMLElement;
+            details?.classList.remove('collapsed');
+            if (icon) icon.style.transform = 'rotate(0deg)';
+        });
+    });
+
+    collapseAllBtn?.addEventListener('click', () => {
+        jobHeaders.forEach(header => {
+            const details = header.nextElementSibling as HTMLElement;
+            const icon = header.querySelector('.collapse-icon') as HTMLElement;
+            details?.classList.add('collapsed');
+            if (icon) icon.style.transform = 'rotate(-90deg)';
+        });
+    });
+
+    // Toggle job details on header click
+    jobHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const details = header.nextElementSibling as HTMLElement;
+            const icon = header.querySelector('.collapse-icon') as HTMLElement;
+            
+            if (details?.classList.contains('collapsed')) {
+                details.classList.remove('collapsed');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            } else {
+                details?.classList.add('collapsed');
+                if (icon) icon.style.transform = 'rotate(-90deg)';
+            }
+        });
+    });
+
+    // Timeline node click to toggle
+    const timelineNodes = document.querySelectorAll('.timeline-node');
+    timelineNodes.forEach((node, index) => {
+        node.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const jobCard = node.closest('.job-card');
+            const header = jobCard?.querySelector('.job-header') as HTMLElement;
+            header?.click();
+        });
+    });
+
+    // Copy git command to clipboard
+    const gitCommands = document.querySelectorAll('.git-command');
+    const toast = document.getElementById('toast');
+
+    gitCommands.forEach(cmd => {
+        cmd.addEventListener('click', async () => {
+            const command = (cmd as HTMLElement).dataset.command;
+            if (command) {
+                try {
+                    await navigator.clipboard.writeText(command);
+                    // Show toast
+                    if (toast) {
+                        toast.style.transform = 'translateY(0)';
+                        toast.style.opacity = '1';
+                        setTimeout(() => {
+                            toast.style.transform = 'translateY(8rem)';
+                            toast.style.opacity = '0';
+                        }, 2000);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            }
+        });
+    });
+
+    // Status dots click animation
+    const statusDots = document.querySelectorAll('.status-dot');
+    statusDots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dot.classList.add('animate-ping');
+            setTimeout(() => {
+                dot.classList.remove('animate-ping');
+            }, 1000);
+        });
+    });
+
+    // Stat cards click animation
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const scale = (card as HTMLElement).style.transform;
+            (card as HTMLElement).style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                (card as HTMLElement).style.transform = 'scale(1)';
+            }, 150);
+        });
+    });
+</script>
