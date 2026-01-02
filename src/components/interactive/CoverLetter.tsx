@@ -57,7 +57,7 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
                     />
                         
                         {/* Hardware Overlays */}
-                        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-30"></div>
+                        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-size-[100%_2px,3px_100%] opacity-30"></div>
                         <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-emerald-400"></div>
                         <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-emerald-400"></div>
                         <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-emerald-400"></div>

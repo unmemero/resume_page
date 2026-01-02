@@ -50,7 +50,7 @@ export default function ContactForm(){
 
     return (
         <div className='relative border border-slate-300 dark:border-slate-700 bg-white/95 dark:bg-slate-800/90 backdrop-blur-sm p-8 md:p-10 group 
-            transition-all hover:border-emerald-500/60 rounded-lg shadow-md shadow-slate-200/60 dark:shadow-lg dark:shadow-none
+            transition-all hover:border-emerald-500/60 rounded-lg shadow-md shadow-slate-200/60 dark:shadow-lg
         '>
             <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-emerald-400" />
             <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-emerald-400" />
