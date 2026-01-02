@@ -85,7 +85,7 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
     <div class="max-w-6xl mx-auto py-10 px-4">
         <!-- Header with Interactive Filters -->
         <div class="mb-12 border-b border-emerald-500/20 pb-6">
-            <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
+            <h1 class="text-3xl font-bold tracking-tighter text-slate-800 dark:text-slate-100 uppercase">
                 <span class="text-emerald-500 font-medium font-mono mr-2">[0x00]</span> 
                 <span class="font-mono font-medium">SKILLS_MANIFEST</span>
             </h1>
@@ -107,24 +107,24 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
             </button>
             <button 
                 id="filter-starred" 
-                class="filter-btn px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                class="filter-btn px-4 py-2 font-mono text-xs border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900/50 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-all rounded uppercase tracking-wider"
                 data-filter="starred"
             >
-                [★_STARRED]
+                [&#9733;_STARRED]
             </button>
             <button 
                 id="filter-expand" 
-                class="filter-btn px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                class="filter-btn px-4 py-2 font-mono text-xs border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900/50 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-all rounded uppercase tracking-wider"
                 data-filter="expand"
             >
-                [▼_EXPAND_ALL]
+                [&#9660;_EXPAND_ALL]
             </button>
             <button 
                 id="filter-collapse" 
-                class="filter-btn px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                class="filter-btn px-4 py-2 font-mono text-xs border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900/50 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-all rounded uppercase tracking-wider"
                 data-filter="collapse"
             >
-                [▲_COLLAPSE_ALL]
+                [&#9650;_COLLAPSE_ALL]
             </button>
         </div>
 
@@ -132,7 +132,7 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             {modules.map((module, moduleIndex) => (
                 <section 
-                    class="skill-module relative border border-slate-800 bg-linear-to-br from-slate-900/60 to-slate-900/40 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-500 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]"
+                    class="skill-module relative border border-slate-300 dark:border-slate-800 bg-white/95 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-500 hover:border-emerald-500/50 shadow-md shadow-slate-200/60 dark:shadow-none hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]"
                     data-module={module.header}
                     style={`animation-delay: ${moduleIndex * 0.1}s`}
                 >
@@ -148,11 +148,11 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
                         data-collapsed="false"
                     >
                         <div class="flex items-center gap-3">
-                            <span class="collapse-indicator text-emerald-500 font-mono text-sm transition-transform duration-300">▼</span>
-                            <h2 class="font-mono text-sm font-bold text-emerald-400 tracking-widest uppercase group-hover/header:text-emerald-300 transition-colors">
+                            <span class="collapse-indicator text-emerald-600 dark:text-emerald-500 font-mono text-sm transition-transform duration-300">&#9660;</span>
+                            <h2 class="font-mono text-sm font-bold text-emerald-600 dark:text-emerald-400 tracking-widest uppercase group-hover/header:text-emerald-500 dark:group-hover/header:text-emerald-300 transition-colors">
                                 {module.header}
                             </h2>
-                            <span class="module-count font-mono text-[10px] text-slate-600 bg-slate-800/50 px-2 py-0.5 rounded">
+                            <span class="module-count font-mono text-[10px] text-slate-700 dark:text-slate-600 bg-slate-200 dark:bg-slate-800/50 px-2 py-0.5 rounded">
                                 {module.skills.length}
                             </span>
                         </div>
@@ -177,24 +177,24 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
                                     class={`skill-item group/skill p-4 border-l-2 transition-all duration-300 cursor-pointer rounded-r hover:translate-x-1 ${
                                         skill.isStarred 
                                             ? 'border-emerald-500 bg-emerald-500/5 hover:bg-emerald-500/10' 
-                                            : 'border-slate-700 hover:border-emerald-500/50 hover:bg-slate-800/30'
+                                            : 'border-slate-300 dark:border-slate-700 hover:border-emerald-500/50 hover:bg-slate-100 dark:hover:bg-slate-800/30'
                                     }`}
                                     data-starred={skill.isStarred}
                                 >
                                     <div class="flex justify-between items-center mb-3">
                                         <div class="flex items-center gap-2">
                                             {skill.isStarred && (
-                                                <span class="text-emerald-500 text-sm animate-pulse">★</span>
+                                                <span class="text-emerald-500 text-sm animate-pulse">&#9733;</span>
                                             )}
                                             <span class={`font-mono text-sm tracking-tight transition-colors ${
                                                 skill.isStarred 
-                                                    ? 'text-emerald-300 font-bold' 
-                                                    : 'text-slate-300 group-hover/skill:text-emerald-400'
+                                                    ? 'text-emerald-700 dark:text-emerald-300 font-bold' 
+                                                    : 'text-slate-700 dark:text-slate-300 group-hover/skill:text-emerald-600 dark:group-hover/skill:text-emerald-400'
                                             }`}>
                                                 {skill.name}
                                             </span>
                                         </div>
-                                        <span class="font-mono text-[10px] text-slate-500 uppercase tracking-wider bg-slate-900/50 px-2 py-1 rounded">
+                                        <span class="font-mono text-[10px] text-slate-600 dark:text-slate-500 uppercase tracking-wider bg-slate-200 dark:bg-slate-900/50 px-2 py-1 rounded">
                                             {skill.duration}
                                         </span>
                                     </div>
@@ -216,8 +216,8 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
 
                                     {/* Proficiency Label (Hidden by default, shown on hover) */}
                                     <div class="proficiency-label mt-2 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300">
-                                        <span class="font-mono text-[9px] text-slate-600 uppercase">
-                                            Proficiency: <span class="text-emerald-500">{Math.round((activeSegments / totalSegments) * 100)}%</span>
+                                        <span class="font-mono text-[9px] text-slate-500 dark:text-slate-600 uppercase">
+                                            Proficiency: <span class="text-emerald-600 dark:text-emerald-500">{Math.round((activeSegments / totalSegments) * 100)}%</span>
                                         </span>
                                     </div>
                                 </div>
@@ -229,31 +229,31 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
         </div>
 
         <!-- Stats Footer -->
-        <div class="mt-16 pt-10 border-t border-slate-800/50">
+        <div class="mt-16 pt-10 border-t border-slate-300 dark:border-slate-800/50">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group">
+                <div class="stat-card text-center p-6 bg-white dark:bg-slate-900/40 rounded-lg border border-slate-300 dark:border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group shadow-sm shadow-slate-200/60 dark:shadow-none">
                     <div class="font-mono text-2xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {modules.length}
                     </div>
-                    <div class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Categories</div>
+                    <div class="font-mono text-[10px] text-slate-600 dark:text-slate-500 uppercase tracking-widest">Categories</div>
                 </div>
-                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group">
-                    <div class="font-mono text-2xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
+                <div class="stat-card text-center p-6 bg-white dark:bg-slate-900/40 rounded-lg border border-slate-300 dark:border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group shadow-sm shadow-slate-200/60 dark:shadow-none">
+                    <div class="font-mono text-2xl font-bold text-emerald-600 dark:text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {allSkillsFlat.length}
                     </div>
-                    <div class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Total Skills</div>
+                    <div class="font-mono text-[10px] text-slate-600 dark:text-slate-500 uppercase tracking-widest">Total Skills</div>
                 </div>
-                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group">
-                    <div class="font-mono text-2xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
+                <div class="stat-card text-center p-6 bg-white dark:bg-slate-900/40 rounded-lg border border-slate-300 dark:border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group shadow-sm shadow-slate-200/60 dark:shadow-none">
+                    <div class="font-mono text-2xl font-bold text-emerald-600 dark:text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {allSkillsFlat.filter(s => s.isStarred).length}
                     </div>
-                    <div class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Starred</div>
+                    <div class="font-mono text-[10px] text-slate-600 dark:text-slate-500 uppercase tracking-widest">Starred</div>
                 </div>
-                <div class="stat-card text-center p-6 bg-slate-900/40 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group">
-                    <div class="font-mono text-2xl font-bold text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
+                <div class="stat-card text-center p-6 bg-white dark:bg-slate-900/40 rounded-lg border border-slate-300 dark:border-slate-800 hover:border-emerald-500/30 transition-all cursor-pointer group shadow-sm shadow-slate-200/60 dark:shadow-none">
+                    <div class="font-mono text-2xl font-bold text-emerald-600 dark:text-emerald-500 mb-2 group-hover:scale-110 transition-transform">
                         {Math.round(maxMonths / 12)}+
                     </div>
-                    <div class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Years (Max)</div>
+                    <div class="font-mono text-[10px] text-slate-600 dark:text-slate-500 uppercase tracking-widest">Years (Max)</div>
                 </div>
             </div>
         </div>
@@ -323,10 +323,10 @@ const getSegmentColorClass = (segmentIndex: number, activeSegments: number) => {
                 
                 if (btn === activeBtn) {
                     btn.classList.add('active', 'border-emerald-500', 'bg-emerald-500/10', 'text-emerald-400');
-                    btn.classList.remove('border-slate-700', 'bg-slate-900/50', 'text-slate-400');
+                    btn.classList.remove('border-slate-300', 'dark:border-slate-700', 'bg-slate-200', 'dark:bg-slate-900/50', 'text-slate-700', 'dark:text-slate-400');
                 } else {
                     btn.classList.remove('active', 'border-emerald-500', 'bg-emerald-500/10', 'text-emerald-400');
-                    btn.classList.add('border-slate-700', 'bg-slate-900/50', 'text-slate-400');
+                    btn.classList.add('border-slate-300', 'dark:border-slate-700', 'bg-slate-200', 'dark:bg-slate-900/50', 'text-slate-700', 'dark:text-slate-400');
                 }
             });
         }

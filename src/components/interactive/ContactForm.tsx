@@ -49,8 +49,8 @@ export default function ContactForm(){
     }
 
     return (
-        <div className='relative border border-slate-700 bg-slate-800/90 backdrop-blur-sm p-8 md:p-10 group 
-            transition-all hover:border-emerald-500/60 rounded-lg shadow-lg
+        <div className='relative border border-slate-300 dark:border-slate-700 bg-white/95 dark:bg-slate-800/90 backdrop-blur-sm p-8 md:p-10 group 
+            transition-all hover:border-emerald-500/60 rounded-lg shadow-md shadow-slate-200/60 dark:shadow-lg dark:shadow-none
         '>
             <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-emerald-400" />
             <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-emerald-400" />
@@ -60,14 +60,14 @@ export default function ContactForm(){
                 className='space-y-8'
             >
                 <div className='flex items-center gap-3 mb-10 border-b
-                    border-slate-700 pb-3
+                    border-slate-300 dark:border-slate-700 pb-3
                 '>
                     <Terminal 
                         size={14}
                         className='text-emerald-500'
                     />
                     <span
-                        className='font-mono text-[10px] text-slate-400 uppercase tracking-widest font-bold'
+                        className='font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold'
                     >
                         Transmission_Input
                     </span>
@@ -78,27 +78,27 @@ export default function ContactForm(){
                         name='name' 
                         required 
                         placeholder='Your Name' 
-                        className='w-full bg-transparent border-b border-slate-700 py-3 font-mono
-                        text-xs text-white outline-none focus:border-emerald-500 transition-all
-                        placeholder:text-slate-500'
+                        className='w-full bg-transparent border-b border-slate-300 dark:border-slate-700 py-3 font-mono
+                        text-xs text-slate-800 dark:text-white outline-none focus:border-emerald-500 transition-all
+                        placeholder:text-slate-400 dark:placeholder:text-slate-500'
                     />
                     <input 
                         name="email" 
                         type="email" 
                         required 
                         placeholder="Your Email" 
-                        className="w-full bg-transparent border-b border-slate-700 py-3 font-mono 
-                        text-xs text-white outline-none focus:border-emerald-500 transition-all 
-                        placeholder:text-slate-500" 
+                        className="w-full bg-transparent border-b border-slate-300 dark:border-slate-700 py-3 font-mono 
+                        text-xs text-slate-800 dark:text-white outline-none focus:border-emerald-500 transition-all 
+                        placeholder:text-slate-400 dark:placeholder:text-slate-500" 
                     />
                     <textarea 
                         name="message" 
                         required 
                         rows={4} 
                         placeholder="Message" 
-                        className="w-full bg-transparent border-b border-slate-700 py-3 font-mono 
-                        text-xs text-white outline-none focus:border-emerald-500 transition-all 
-                        placeholder:text-slate-500 resize-none" 
+                        className="w-full bg-transparent border-b border-slate-300 dark:border-slate-700 py-3 font-mono 
+                        text-xs text-slate-800 dark:text-white outline-none focus:border-emerald-500 transition-all 
+                        placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none" 
                     />
                 </div>
 

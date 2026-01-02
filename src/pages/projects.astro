@@ -28,44 +28,44 @@ const projectDocs = await entry?.body.split(/^#+\s+/m).filter(Boolean).reduce(as
                 <span class="font-mono font-medium">Projects_dir</span>
             </h1>
             <p class="font-mono text-[10px] text-slate-500 mt-3 uppercase tracking-widest">
-                Status: <span class="text-red-400">CRITICAL</span> | 
+                Status: <span class="text-yellow-600">IN_PROGRESS</span> | 
                 Repositories: <span class="text-emerald-400">{projects.length}</span> | 
                 Mode: <span class="text-emerald-400">Nuclear</span>
             </p>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-slate-800 bg-slate-900/40 rounded-lg overflow-hidden shadow-xl">
-            <div class="lg:col-span-3 border-r border-slate-800 bg-black/50 p-4">
-                <div class="mb-4 pb-3 border-b border-slate-800">
-                    <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-wider">⚡ Project Explorer</span>
-                    <div class="text-[8px] text-slate-600 mt-1">{projects.length} repositories loaded</div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-slate-300 dark:border-slate-800 bg-white/95 dark:bg-slate-900/40 rounded-lg overflow-hidden shadow-md shadow-slate-200/60 dark:shadow-xl">
+            <div class="lg:col-span-3 border-r border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-black/50 p-4">
+                <div class="mb-4 pb-3 border-b border-slate-300 dark:border-slate-800">
+                    <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">&#9889; Project Explorer</span>
+                    <div class="text-[8px] text-slate-500 dark:text-slate-600 mt-1">{projects.length} repositories loaded</div>
                 </div>
                 <nav class="space-y-1">
                     {projects.map((p: any, idx: number)=>(
                         <button
-                            class="project-tab w-full flex items-center gap-2 px-3 py-2 text-xs font-mono text-slate-400 hover:text-emerald-400 transition-all duration-200 group rounded-md relative overflow-hidden"
+                            class="project-tab w-full flex items-center gap-2 px-3 py-2 text-xs font-mono text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all duration-200 group rounded-md relative overflow-hidden"
                             data-target={p.id}
                         >
                             <span class="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/10 transition-colors duration-200"></span>
-                            <span class="text-emerald-900 group-hover:text-emerald-500 transition-colors z-10">📄</span> 
+                            <span class="text-emerald-700 dark:text-emerald-900 group-hover:text-emerald-500 transition-colors z-10">&#128196;</span> 
                             <span class="z-10 flex-1 text-left">{p.title}.git</span>
-                            <span class="ml-auto text-[8px] text-slate-600 group-hover:text-emerald-600 z-10">#{idx.toString().padStart(2, '0')}</span>
+                            <span class="ml-auto text-[8px] text-slate-500 dark:text-slate-600 group-hover:text-emerald-600 z-10">#{idx.toString().padStart(2, '0')}</span>
                         </button>
                     ))}
                 </nav>
             </div>
 
-            <div class="lg:col-span-9 p-6 md:p-12 min-h-[400px] relative bg-slate-900/30">
+            <div class="lg:col-span-9 p-6 md:p-12 min-h-100 relative bg-white dark:bg-slate-900/30">
             {projects.map((p:any, i:any) => (
                 <div
                     id={`content-${p.id}`}
                     class={`project-pane ${i === 0 ? '' : 'hidden'}`}
                 >
-                    <div class="flex flex-wrap justify-between items-start gap-4 mb-8 pb-6 border-b border-slate-800/50">
+                    <div class="flex flex-wrap justify-between items-start gap-4 mb-8 pb-6 border-b border-slate-300 dark:border-slate-800/50">
                         <div class="flex-1">
                             <div class="flex items-center gap-3 mb-3">
                                 <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                                <h2 class="text-4xl font-black text-white">{p.title}</h2>
+                                <h2 class="text-4xl font-black text-slate-800 dark:text-white">{p.title}</h2>
                             </div>
                             <div class="flex flex-wrap gap-2">
                                 {p.stack.map((s: any) => (
@@ -81,7 +81,7 @@ const projectDocs = await entry?.body.split(/^#+\s+/m).filter(Boolean).reduce(as
                             class="px-4 py-2 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-black font-bold text-[10px] font-mono transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/30 hover:scale-105 active:scale-95 rounded"
                         >
                             <span class="flex items-center gap-2">
-                                <span>⚡</span>
+                                <span>&#9889;</span>
                                 <span>FETCH ORIGIN</span>
                             </span>
                         </a>
@@ -90,7 +90,7 @@ const projectDocs = await entry?.body.split(/^#+\s+/m).filter(Boolean).reduce(as
                     <div class="mb-16">
                         <ul class="space-y-2">
                             {projectDocs?.[p.id]?.map((item: string) => (
-                                <li class="flex items-start gap-3 text-slate-300 font-mono text-sm">
+                                <li class="flex items-start gap-3 text-slate-700 dark:text-slate-300 font-mono text-sm">
                                     <span class="text-emerald-500 mt-1">$</span>
                                     <span class="flex-1" set:html={item} />
                                 </li>
@@ -98,11 +98,11 @@ const projectDocs = await entry?.body.split(/^#+\s+/m).filter(Boolean).reduce(as
                         </ul>
                     </div>
 
-                    <div class="absolute bottom-6 left-8 right-8 flex justify-between border-t border-slate-800/50 pt-4 font-mono text-[9px] text-slate-600">
+                    <div class="absolute bottom-6 left-8 right-8 flex justify-between border-t border-slate-300 dark:border-slate-800/50 pt-4 font-mono text-[9px] text-slate-500 dark:text-slate-600">
                         <div class="flex items-center gap-4">
-                            <span>📁 PATH: ~/projects/{p.id}</span>
-                            <span class="text-slate-700">|</span>
-                            <span>🔒 MODE: read_only</span>
+                            <span>&#128193; PATH: ~/projects/{p.id}</span>
+                            <span class="text-slate-400 dark:text-slate-700">|</span>
+                            <span>&#128274; MODE: read_only</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>

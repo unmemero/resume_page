@@ -28,7 +28,7 @@ const details = parseDetails(entry?.body || '');
         <!-- Header -->
         <div class="mb-12">
             <div class="relative mb-6 border-b border-emerald-500/20 pb-6">
-                <h1 class="text-3xl font-bold tracking-tighter text-slate-100 uppercase">
+                <h1 class="text-3xl font-bold tracking-tighter text-slate-800 dark:text-slate-100 uppercase">
                     <span class="text-emerald-500 font-mono font-medium mr-2">[0x02]</span>
                     <span class="font-mono font-medium">EDUCATION_MODULES</span>
                 </h1>
@@ -49,15 +49,15 @@ const details = parseDetails(entry?.body || '');
                 </button>
                 <button 
                     id="expand-all"
-                    class="px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                    class="px-4 py-2 font-mono text-xs border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900/50 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-all rounded uppercase tracking-wider"
                 >
-                    [▼_EXPAND]
+                    [&#9660;_EXPAND]
                 </button>
                 <button 
                     id="collapse-all"
-                    class="px-4 py-2 font-mono text-xs border border-slate-700 bg-slate-900/50 text-slate-400 hover:bg-slate-800 hover:border-slate-600 transition-all rounded uppercase tracking-wider"
+                    class="px-4 py-2 font-mono text-xs border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900/50 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 transition-all rounded uppercase tracking-wider"
                 >
-                    [▲_COLLAPSE]
+                    [&#9650;_COLLAPSE]
                 </button>
             </div>
         </div>
@@ -66,7 +66,7 @@ const details = parseDetails(entry?.body || '');
         <div class="grid gap-10">
             {schools.map((edu:any, index:any) =>(
                 <div
-                    class="edu-module relative border border-slate-800 bg-linear-to-br from-slate-900/60 to-slate-900/40 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-500 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]"
+                    class="edu-module relative border border-slate-300 dark:border-slate-800 bg-white/95 dark:bg-slate-900/50 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-500 hover:border-emerald-500/50 shadow-md shadow-slate-200/60 dark:shadow-none hover:shadow-[0_0_30px_rgba(16,185,129,0.1)]"
                     data-school={edu.school}
                     data-index={index}
                     style={`animation-delay: ${index * 0.15}s`}
@@ -87,24 +87,24 @@ const details = parseDetails(entry?.body || '');
                                             ? 'bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse' 
                                             : 'bg-slate-600 hover:bg-emerald-500/50'
                                     }`}></div>
-                                    <span class="collapse-icon text-emerald-500 font-mono text-sm transition-transform duration-300">▼</span>
+                                    <span class="collapse-icon text-emerald-600 dark:text-emerald-500 font-mono text-sm transition-transform duration-300">&#9660;</span>
                                 </div>
                                 
                                 <div class="flex-1">
-                                    <span class="font-mono text-[10px] text-slate-600 uppercase tracking-widest block mb-3">
+                                    <span class="font-mono text-[10px] text-slate-600 dark:text-slate-600 uppercase tracking-widest block mb-3">
                                         Module_0x{(index + 1).toString().padStart(2, '0')}
                                     </span>
-                                    <h2 class="text-xl md:text-2xl font-bold text-slate-100 mb-3 tracking-tight group-hover:text-emerald-400 transition-colors">
+                                    <h2 class="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-100 mb-3 tracking-tight group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
                                         {edu.degree}
                                     </h2>
-                                    <p class="text-emerald-400 font-mono text-sm uppercase flex items-center gap-2 mb-3">
-                                        <span class="text-slate-600">@</span>
+                                    <p class="text-emerald-600 dark:text-emerald-400 font-mono text-sm uppercase flex items-center gap-2 mb-3">
+                                        <span class="text-slate-500 dark:text-slate-600">@</span>
                                         {edu.school}
                                     </p>
-                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-700 bg-slate-900/50 font-mono text-[10px] text-slate-500 rounded">
-                                        <span class="text-emerald-500">▸</span>
+                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-900/50 font-mono text-[10px] text-slate-600 dark:text-slate-500 rounded">
+                                        <span class="text-emerald-600 dark:text-emerald-500">from </span>
                                         {edu.period.split(' to ')[0]} 
-                                        <span class="text-slate-700">→</span> 
+                                        <span class="text-slate-400 dark:text-emerald-500"> to </span> 
                                         {edu.period.split(' to ')[1]}
                                     </div>
                                 </div>
@@ -113,13 +113,13 @@ const details = parseDetails(entry?.body || '');
                             {edu.gpa && (
                                 <div class="gpa-card relative group/gpa cursor-pointer">
                                     <div class="absolute -inset-2 bg-emerald-500/10 blur-xl opacity-0 group-hover/gpa:opacity-100 transition-opacity"></div>
-                                    <div class="relative p-4 border border-slate-800 bg-slate-900/80 rounded hover:border-emerald-500/50 transition-all">
-                                        <span class="block font-mono text-[9px] text-slate-600 mb-2 uppercase tracking-wider">Performance_Index</span>
+                                    <div class="relative p-4 border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900/80 rounded hover:border-emerald-500/50 transition-all shadow-sm shadow-slate-200/60 dark:shadow-none">
+                                        <span class="block font-mono text-[9px] text-slate-500 dark:text-slate-600 mb-2 uppercase tracking-wider">Performance_Index</span>
                                         <div class="flex items-baseline gap-1">
-                                            <span class="text-3xl font-black text-emerald-400 font-mono leading-none">{edu.gpa}</span>
-                                            <span class="text-xs text-slate-500 font-mono">/4.0</span>
+                                            <span class="text-3xl font-black text-emerald-600 dark:text-emerald-400 font-mono leading-none">{edu.gpa}</span>
+                                            <span class="text-xs text-slate-500 dark:text-slate-500 font-mono">/4.0</span>
                                         </div>
-                                        <div class="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="mt-2 h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                                             <div 
                                                 class="h-full bg-linear-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-1000"
                                                 style={`width: ${(parseFloat(edu.gpa) / 4.0) * 100}%`}
@@ -137,17 +137,17 @@ const details = parseDetails(entry?.body || '');
                             <!-- Awards Section -->
                             {details[edu.id]?.awards?.length > 0 && (
                                 <div class="award-section border-l-2 border-emerald-500/50 pl-6 py-2">
-                                    <h4 class="font-mono text-xs text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
+                                    <h4 class="font-mono text-xs text-emerald-600 dark:text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
                                         <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> 
                                         Recognitions
                                     </h4>
                                     <ul class="space-y-3">
                                         {details[edu.id].awards.map((award, awardIndex) => (
                                             <li 
-                                                class="award-item text-sm text-slate-300 font-mono flex items-start gap-3 group/item hover:text-emerald-300 transition-all cursor-pointer p-2 rounded hover:bg-emerald-500/5"
+                                                class="award-item text-sm text-slate-700 dark:text-slate-300 font-mono flex items-start gap-3 group/item hover:text-emerald-600 dark:hover:text-emerald-300 transition-all cursor-pointer p-2 rounded hover:bg-emerald-500/5"
                                                 style={`animation-delay: ${(awardIndex * 0.05)}s`}
                                             >
-                                                <span class="text-slate-700 group-hover/item:text-emerald-500 transition-colors mt-0.5">▹</span>
+                                                <span class="text-slate-500 dark:text-slate-700 group-hover/item:text-emerald-500 transition-colors mt-0.5">&#9657;</span>
                                                 <span class="flex-1">{award}</span>
                                             </li>
                                         ))}
@@ -157,15 +157,15 @@ const details = parseDetails(entry?.body || '');
 
                             <!-- Coursework Section -->
                             {details[edu.id]?.coursework?.length > 0 && (
-                                <div class="coursework-section border-l-2 border-slate-700 pl-6 py-2">
-                                    <h4 class="font-mono text-xs text-slate-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
-                                        <span class="w-2 h-2 bg-slate-600 rounded-full"></span> 
+                                <div class="coursework-section border-l-2 border-slate-400 dark:border-slate-700 pl-6 py-2">
+                                    <h4 class="font-mono text-xs text-slate-600 dark:text-slate-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
+                                        <span class="w-2 h-2 bg-slate-400 dark:bg-slate-600 rounded-full"></span> 
                                         Key Modules
                                     </h4>
                                     <div class="flex flex-wrap gap-2">
                                         {details[edu.id].coursework.map((course, courseIndex) => (
                                             <span 
-                                                class="course-tag px-3 py-1.5 text-xs font-mono border border-slate-700 text-slate-400 bg-slate-900/50 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all cursor-pointer rounded"
+                                                class="course-tag px-3 py-1.5 text-xs font-mono border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-400 bg-slate-200 dark:bg-slate-900/50 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all cursor-pointer rounded"
                                                 style={`animation-delay: ${(courseIndex * 0.03)}s`}
                                             >
                                                 {course}
@@ -178,9 +178,9 @@ const details = parseDetails(entry?.body || '');
 
                         <!-- Footer Info -->
                         <div class="px-6 md:px-8 pb-6">
-                            <div class="flex items-center justify-between pt-4 border-t border-slate-800/50">
-                                <code class="font-mono text-[10px] text-slate-700 hover:text-emerald-500/70 transition-colors">
-                                    <span class="text-slate-600">#</span> education/{edu.school.toLowerCase().replace(/\s+/g, '-')}
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-300 dark:border-slate-800/50">
+                                <code class="font-mono text-[10px] text-slate-600 dark:text-slate-700 hover:text-emerald-600 dark:hover:text-emerald-500/70 transition-colors">
+                                    <span class="text-slate-500 dark:text-slate-600">#</span> education/{edu.school.toLowerCase().replace(/\s+/g, '-')}
                                 </code>
                                 <div class="flex gap-1.5">
                                     <div class="status-indicator w-2 h-2 rounded-full bg-emerald-500/30 hover:bg-emerald-500 transition-colors cursor-pointer" title="Completed"></div>

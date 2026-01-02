@@ -10,7 +10,7 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
     const [verbose, setVerbose] = useState(false);
 
     return (
-        <div className='relative max-w-3xl mx-auto p-8 border border-slate-200 dark:border-slate-800 rounded-lg bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col shadow-sm dark:shadow-none'>
+        <div className='relative max-w-3xl mx-auto p-8 border border-slate-300 dark:border-slate-800 rounded-lg bg-white/95 dark:bg-slate-900/50 backdrop-blur-sm overflow-hidden flex flex-col shadow-md shadow-slate-200/60 dark:shadow-none'>
             
             {/* 1. THE SCANNING LINE (The moving green light) */}
             {verbose && (
@@ -23,11 +23,11 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
             )}
 
             {/* 2. TERMINAL HEADER (The terminal looking thing with green pointer) */}
-            <div className='relative z-10 flex justify-between items-center mb-8 border-b border-slate-200 dark:border-slate-800 pb-4'>
+            <div className='relative z-10 flex justify-between items-center mb-8 border-b border-slate-300 dark:border-slate-800 pb-4'>
                 <h1 className='text-sm font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-2'>
                     {/* Glowing Green Pointer/Status Light */}
                     <span className='w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]' />
-                    rafael@dev - ~/resume - $ <span className='font-mono text-slate-700 dark:text-white'>cat cover_letter.md --{verbose ? "verbose" : "concise"}</span>
+                    rafael@dev - ~/resume - $ <span className='font-mono text-slate-800 dark:text-white'>cat cover_letter.md --{verbose ? "verbose" : "concise"}</span>
                 </h1>
                 <button
                     onClick={() => setVerbose(!verbose)}
@@ -49,7 +49,7 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
                 <div className="absolute -inset-1 bg-emerald-500/20 rounded-lg blur opacity-40 group-hover:opacity-75 transition duration-500"></div>
                 
                 {/* Adjusted to w-32 on mobile (smaller) and w-44 on desktop */}
-                <div className='relative w-40 h-40 md:w-44 md:h-56 overflow-hidden rounded-sm border border-emerald-500/30 bg-slate-100 dark:bg-slate-950 shadow-2xl'>
+                <div className='relative w-40 h-40 md:w-44 md:h-56 overflow-hidden rounded-sm border border-emerald-500/50 dark:border-emerald-500/30 bg-slate-100 dark:bg-slate-950 shadow-2xl'>
                     <img 
                         src={`${baseUrl}assets/my_pic.jpg`} 
                         alt="Rafael Garcia" 
@@ -71,7 +71,7 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
 
                 {/* Text Content */}
                 <motion.div layout className='flex-1 font-sans text-center md:text-left'>
-                    <p className="text-lg text-slate-700 dark:text-white font-medium mb-6 leading-relaxed">
+                    <p className="text-lg text-slate-800 dark:text-white font-medium mb-6 leading-relaxed">
                         Hello Everyone. I'm <span className="text-emerald-600 dark:text-emerald-400 font-bold">Rafael Garcia</span>. 
                         I'm a Computer Science new grad from El Paso, Texas, with a deep interest 
                         in the intersection of low-level systems, automation, and AI infrastructure.
