@@ -12,6 +12,16 @@ export default defineConfig({
   vite: {
     build: {
       sourcemap: false,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if(id.includes('node_modules')) {
+              return 'vendor'
+            }
+          }
+        }
+      }
     },
     plugins: [tailwindcss()],
   },
