@@ -3,6 +3,7 @@ import '../styles/global.css';
 import ThemeToggle from '../components/ui/ThemeToggle';
 import MobileMenu from '../components/ui/MobileMenu';
 import AnimatedBackground from '../components/interactive/AnimatedBackground';
+import Analytics from '@vercel/analytics/astro';
 
 const { title } = Astro.props;
 const currentYear = new Date().getFullYear();
@@ -11,8 +12,11 @@ const currentYear = new Date().getFullYear();
 <!doctype html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />        <title>{title} | Portfolio</title>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.rafaelgarciaresume.com/" />
+        <meta property="og:title" content="Rafael Garcia |  Software Engineer" />
+        <meta property="og:description" content="Fullstack Engineer based in El Paso/Bentonville. Specializing in Systems, React, and AI/ML." />
+        <meta property="og:image" content="https://www.rafaelgarciaresume.com/og-preview.png" />
         <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
         <script is:inline>
             const theme = (()=>{
@@ -100,7 +104,7 @@ const currentYear = new Date().getFullYear();
         </main>
 
         <footer class="border-t border-slate-200/50 dark:border-white/5 py-10 text-center text-xs text-slate-500 dark:text-slate-500 font-mono">
-            <p>&copy; {currentYear} - Built with Astro</p>
+            <p>&copy; {currentYear} Rafael Garcia - Built with Astro</p>
             <p class="mt-2 text-[10px] opacity-50">STATUS: STABLE</p>
         </footer>
 
@@ -113,5 +117,6 @@ const currentYear = new Date().getFullYear();
               }
             })
         </script>
+        <Analytics />
     </body>
 </html>

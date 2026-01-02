@@ -20,9 +20,15 @@ const projects = defineCollection({
     schema: z.any().optional(),
 });
 
+const contact = defineCollection({
+    type: 'content',
+    schema: z.any().optional(),
+})
+
 export const collections = {
     'skills': skills,
     'experience': experience,
     'education': education,
-    'projects': projects
+    'projects': projects,
+    'contact': contact
 };

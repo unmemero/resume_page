@@ -10,7 +10,10 @@ export default defineConfig({
   base: '/',
   output: 'server', 
   vite: {
-    plugins: [tailwindcss()]
+    build: {
+      sourcemap: false,
+    },
+    plugins: [tailwindcss()],
   },
   integrations: [react()],
   adapter: vercel() 

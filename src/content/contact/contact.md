@@ -2,8 +2,8 @@
 endpoints:
   - id: "email"
     label: "Email"
-    value: "your.email@example.com"
-    href: "mailto:your.email@example.com"
+    value: "rgarcia.cs.business@gmail.com"
+    href: "mailto:rgarcia.cs.business@gmail.com"
     icon: "Mail"
   - id: "github"
     label: "GitHub"
@@ -12,7 +12,7 @@ endpoints:
     icon: "Github"
   - id: "linkedin"
     label: "LinkedIn"
-    value: "your-profile"
-    href: "https://linkedin.com/in/your-profile"
+    value: "Rafael Garcia"
+    href: "www.linkedin.com/in/rgarcia-cs-business"
     icon: "Linkedin"
 ---
