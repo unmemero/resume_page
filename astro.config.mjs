@@ -27,7 +27,6 @@ export default defineConfig({
   },
   integrations: [react()],
   adapter: vercel({
-    functionPerRoute: false,
-    runtime: 'nodejs20.x'
+    functionPerRoute: false
   }) 
 });
