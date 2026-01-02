@@ -26,5 +26,8 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [react()],
-  adapter: vercel() 
+  adapter: vercel({
+    functionPerRoute: false,
+    runtime: 'nodejs20.x'
+  }) 
 });
