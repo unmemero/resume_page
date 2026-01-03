@@ -13,6 +13,6 @@ endpoints:
   - id: "linkedin"
     label: "LinkedIn"
     value: "Rafael Garcia"
-    href: "www.linkedin.com/in/rgarcia-cs-business"
+    href: "https://www.linkedin.com/in/rgarcia-cs-business"
     icon: "Linkedin"
 ---
