@@ -4,9 +4,10 @@ import { TypewriterText } from './TypewriterText';
 
 interface CoverLetterProps {
     baseUrl?: string;
+    content?: string[];
 }
 
-export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
+export default function CoverLetter({ baseUrl = '/', content = []}: CoverLetterProps) {
     const [verbose, setVerbose] = useState(false);
 
     return (
@@ -72,9 +73,7 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
                 {/* Text Content */}
                 <motion.div layout className='flex-1 font-sans text-center md:text-left'>
                     <p className="text-lg text-slate-800 dark:text-white font-medium mb-6 leading-relaxed">
-                        Hello Everyone. I'm <span className="text-emerald-600 dark:text-emerald-400 font-bold">Rafael Garcia</span>. 
-                        I'm a Computer Science new grad from El Paso, Texas, with a deep interest 
-                        in the intersection of low-level systems, automation, and AI infrastructure.
+                        {content?.[0]}
                     </p>
 
                     <AnimatePresence>
@@ -86,10 +85,15 @@ export default function CoverLetter({ baseUrl = '/' }: CoverLetterProps) {
                                 transition={{ duration: 0.5 }}
                                 className='overflow-hidden text-left'
                             >
-                                <TypewriterText delay={0.1} text="My journey started after getting out of seminary school (yes, I wanted to become a priest). When I discovered that wasn't my thing, I took some time to think very thoroughly what I wanted to do in life. One day, a very simple thought came into my mind, 'well, I like computers, why not computer science?'. From there I decided to start my journey in tech." />
-                                <TypewriterText delay={0.3} text="During my degree I discovered my passions in Software Development, DevOps, Low-Level Systems, AI/ML, and (to a very small extent) hardware repair." />
-                                <TypewriterText delay={0.5} text="Alongside my curriculum, I also participated in various activities, such as giving workshops for the Free and Open Source Software Club, attending 2 consecutive Great Minds in STEM workshops, served as vicepresident for the Art and Computer Science Student Organization, and received the National Science Foundation S-STEM scholarship." />
-                                <TypewriterText delay={0.7} text="On top of my academic life. I also was a return intern at Walmart Global Tech with a full time offer to start in February in the position of Software Engineer II" />
+                                {
+                                    content.slice(1).map((paragraph, i) => (
+                                        <TypewriterText 
+                                            delay={0.1 + i * 0.2}
+                                            key={i}
+                                            text={paragraph}
+                                        />
+                                    ))
+                                }
                             </motion.div>
                         )}
                     </AnimatePresence>

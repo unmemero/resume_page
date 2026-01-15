@@ -1,5 +1,10 @@
 import { defineCollection, z } from 'astro:content'
 
+const letter = defineCollection({
+    type: 'content',
+    schema: z.any().optional(),
+});
+
 const skills = defineCollection({
     type: 'content',
     schema: z.any().optional(),
@@ -26,6 +31,7 @@ const contact = defineCollection({
 })
 
 export const collections = {
+    'letter': letter,
     'skills': skills,
     'experience': experience,
     'education': education,
